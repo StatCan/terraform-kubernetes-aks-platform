@@ -377,28 +377,6 @@ module "kubectl_eck" {
   kubectl_service_account = "${module.namespace_elastic_system.helm_service_account}"
   kubectl_namespace = "${module.namespace_elastic_system.name}"
 }
-s
-module "helm_velero" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-velero.git"
-
-  chart_version = "0.0.2"
-  dependencies = [
-    "${module.namespace_velero.depended_on}",
-  ]
-
-  helm_service_account = "tiller"
-  helm_namespace = "velero"
-
-  backup_storage_resource_group = "${var.velero_backup_storage_resource_group}"
-  backup_storage_account = "${var.velero_backup_storage_account}"
-  backup_storage_bucket = "${var.velero_backup_storage_bucket}"
-
-  azure_client_id = "${var.velero_azure_client_id}"
-  azure_client_secret = "${var.velero_azure_client_secret}"
-  azure_resource_group = "${var.velero_azure_resource_group}"
-  azure_subscription_id = "${var.velero_azure_subscription_id}"
-  azure_tenant_id = "${var.velero_azure_tenant_id}"
-}
 
 module "helm_fluentd" {
   source = "git::https://github.com/statcan/terraform-kubernetes-fluentd.git"
@@ -410,6 +388,14 @@ module "helm_fluentd" {
 
   helm_service_account = "tiller"
   helm_namespace = "monitoring"
+
+  values = <<EOF
+image:
+  pullSecret: registry-prod
+
+rbac:
+  create: yes
+EOF
 }
 
 module "helm_istio" {
@@ -422,6 +408,83 @@ module "helm_istio" {
 
   helm_service_account = "tiller"
   helm_namespace = "istio-system"
+
+  values = <<EOF
+# Use a specific image
+global:
+  # tag: release-1.1-latest-daily
+
+  k8sIngress:
+    enabled: true
+    enableHttps: true
+
+  controlPlanSecurityEnabled: true
+  disablePolicyChecks: false
+  policyCheckFailOpen: false
+  enableTracing: false
+
+  mtls:
+    enabled: true
+
+  outboundTrafficPolicy:
+    mode: ALLOW_ANY
+
+sidecarInjectorWebhook:
+  enabled: true
+  # If true, webhook or istioctl injector will rewrite PodSpec for liveness
+  # health check to redirect request to sidecar. This makes liveness check work
+  # even when mTLS is enabled.
+  rewriteAppHTTPProbe: true
+
+gateways:
+  istio-ingressgateway:
+    sds:
+      enabled: true
+    serviceAnnotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: 'true'
+
+kiali:
+  enabled: true
+  contextPath: /
+  ingress:
+    enabled: true
+    ## Used to create an Ingress record.
+    hosts:
+      - istio-kiali.${var.ingress_domain}
+    annotations:
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "istio"
+    tls:
+      # Secrets must be manually created in the namespace.
+      # - secretName: kiali-tls
+      #   hosts:
+      #     - kiali.local
+
+  dashboard:
+    grafanaURL: https://istio-grafana.${var.ingress_domain}
+
+grafana:
+  enabled: true
+  contextPath: /
+  ingress:
+    enabled: true
+    ## Used to create an Ingress record.
+    hosts:
+      - istio-grafana.${var.ingress_domain}
+    annotations:
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "istio"
+    tls:
+      # Secrets must be manually created in the namespace.
+      # - secretName: grafana-tls
+      #   hosts:
+      #     - grafana.local
+      
+prometheus:
+  enabled: true
+EOF
 }
 
 module "helm_prometheus_operator" {
@@ -499,6 +562,40 @@ prometheus-operator:
 
 destinationRule:
   enabled: true
+EOF
+}
+
+module "helm_velero" {
+  source = "git::https://github.com/statcan/terraform-kubernetes-velero.git"
+
+  chart_version = "0.0.2"
+  dependencies = [
+    "${module.namespace_velero.depended_on}",
+  ]
+
+  helm_service_account = "tiller"
+  helm_namespace = "velero"
+
+  backup_storage_resource_group = "${var.velero_backup_storage_resource_group}"
+  backup_storage_account = "${var.velero_backup_storage_account}"
+  backup_storage_bucket = "${var.velero_backup_storage_bucket}"
+
+  azure_client_id = "${var.velero_azure_client_id}"
+  azure_client_secret = "${var.velero_azure_client_secret}"
+  azure_resource_group = "${var.velero_azure_resource_group}"
+  azure_subscription_id = "${var.velero_azure_subscription_id}"
+  azure_tenant_id = "${var.velero_azure_tenant_id}"
+
+  values = <<EOF
+velero:
+  image:
+    repository: gcr.io/heptio-images/velero
+    tag: v0.11.0
+    pullPolicy: IfNotPresent
+
+  configuration:
+    backupStorageLocation:
+      name: azure
 EOF
 }
 
