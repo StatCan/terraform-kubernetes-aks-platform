@@ -1,0 +1,17 @@
+kubernetes_secret = ""
+docker_repo = ""
+docker_username = ""
+docker_password = "" 
+docker_email = ""
+docker_auth = ""
+
+velero_backup_storage_resource_group = ""
+velero_backup_storage_account = ""
+velero_backup_storage_bucket = ""
+velero_azure_client_id = ""
+velero_azure_client_secret = ""
+velero_azure_resource_group = ""
+velero_azure_subscription_id = ""
+velero_azure_tenant_id = ""
+
+ingress_domain = ""

@@ -21,6 +21,7 @@ module "namespace_default" {
   helm_service_account = "tiller"
 
   # Image Pull Secret
+  kubernetes_secret = "${var.kubernetes_secret}"
   docker_repo = "${var.docker_repo}"
   docker_username = "${var.docker_username}"
   docker_password = "${var.docker_password}"
@@ -57,6 +58,7 @@ module "namespace_ci" {
   helm_service_account = "tiller"
 
   # Image Pull Secret
+  kubernetes_secret = "${var.kubernetes_secret}"
   docker_repo = "${var.docker_repo}"
   docker_username = "${var.docker_username}"
   docker_password = "${var.docker_password}"
@@ -97,6 +99,7 @@ module "namespace_drupal" {
   allowed_nodeports = "10"
 
   # Image Pull Secret
+  kubernetes_secret = "${var.kubernetes_secret}"
   docker_repo = "${var.docker_repo}"
   docker_username = "${var.docker_username}"
   docker_password = "${var.docker_password}"
@@ -131,6 +134,7 @@ module "namespace_elastic_system" {
   helm_service_account = "tiller"
 
   # Image Pull Secret
+  kubernetes_secret = "${var.kubernetes_secret}"
   docker_repo = "${var.docker_repo}"
   docker_username = "${var.docker_username}"
   docker_password = "${var.docker_password}"
@@ -168,6 +172,7 @@ module "namespace_gatekeeper_system" {
   helm_service_account = "tiller"
 
   # Image Pull Secret
+  kubernetes_secret = "${var.kubernetes_secret}"
   docker_repo = "${var.docker_repo}"
   docker_username = "${var.docker_username}"
   docker_password = "${var.docker_password}"
@@ -200,6 +205,7 @@ module "namespace_velero" {
   helm_service_account = "tiller"
 
   # Image Pull Secret
+  kubernetes_secret = "${var.kubernetes_secret}"
   docker_repo = "${var.docker_repo}"
   docker_username = "${var.docker_username}"
   docker_password = "${var.docker_password}"
@@ -239,6 +245,7 @@ module "namespace_istio_system" {
   allowed_nodeports = "9"
 
   # Image Pull Secret
+  kubernetes_secret = "${var.kubernetes_secret}"
   docker_repo = "${var.docker_repo}"
   docker_username = "${var.docker_username}"
   docker_password = "${var.docker_password}"
@@ -283,6 +290,7 @@ module "namespace_monitoring" {
   helm_service_account = "tiller"
 
   # Image Pull Secret
+  kubernetes_secret = "${var.kubernetes_secret}"
   docker_repo = "${var.docker_repo}"
   docker_username = "${var.docker_username}"
   docker_password = "${var.docker_password}"
@@ -385,8 +393,8 @@ module "helm_velero" {
   backup_storage_account = "${var.velero_backup_storage_account}"
   backup_storage_bucket = "${var.velero_backup_storage_bucket}"
 
-  azure_client_id = "${var.kubernetes_client_id}"
-  azure_client_secret = "${var.kubernetes_client_secret}"
+  azure_client_id = "${var.velero_azure_client_id}"
+  azure_client_secret = "${var.velero_azure_client_secret}"
   azure_resource_group = "${var.velero_azure_resource_group}"
   azure_subscription_id = "${var.velero_azure_subscription_id}"
   azure_tenant_id = "${var.velero_azure_tenant_id}"
@@ -436,7 +444,7 @@ prometheus-operator:
     ingress:
       enabled: true
       hosts:
-        - "grafana.${var.ingress_domain}"
+        - grafana.${var.ingress_domain}
       path: /.*
       annotations:
         kubernetes.io/ingress.class: istio
@@ -455,7 +463,7 @@ prometheus-operator:
     ingress:
       enabled: true
       hosts:
-        - "prometheus.${var.ingress_domain}"
+        - prometheus.${var.ingress_domain}
       path: /.*
       annotations:
         kubernetes.io/ingress.class: istio
@@ -474,7 +482,7 @@ prometheus-operator:
     ingress:
       enabled: true
       hosts:
-        - "alertmanager.${var.ingress_domain}"
+        - alertmanager.${var.ingress_domain}
       path: /.*
       annotations:
         kubernetes.io/ingress.class: istio
