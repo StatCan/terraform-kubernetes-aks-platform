@@ -20,13 +20,16 @@ module "namespace_default" {
   # ServiceAccount
   helm_service_account = "tiller"
 
+  # CICD
+  ci_name = "octopus"
+
   # Image Pull Secret
-  kubernetes_secret = "${var.kubernetes_secret}"
-  docker_repo = "${var.docker_repo}"
-  docker_username = "${var.docker_username}"
-  docker_password = "${var.docker_password}"
-  docker_email = "${var.docker_email}"
-  docker_auth = "${var.docker_auth}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
 
   dependencies = []
 }
@@ -57,13 +60,16 @@ module "namespace_ci" {
   # ServiceAccount
   helm_service_account = "tiller"
 
+  # CICD
+  ci_name = "octopus"
+
   # Image Pull Secret
-  kubernetes_secret = "${var.kubernetes_secret}"
-  docker_repo = "${var.docker_repo}"
-  docker_username = "${var.docker_username}"
-  docker_password = "${var.docker_password}"
-  docker_email = "${var.docker_email}"
-  docker_auth = "${var.docker_auth}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
 
   dependencies = []
 }
@@ -98,13 +104,16 @@ module "namespace_drupal" {
   allowed_loadbalancers = "10"
   allowed_nodeports = "10"
 
+  # CICD
+  ci_name = "octopus"
+
   # Image Pull Secret
-  kubernetes_secret = "${var.kubernetes_secret}"
-  docker_repo = "${var.docker_repo}"
-  docker_username = "${var.docker_username}"
-  docker_password = "${var.docker_password}"
-  docker_email = "${var.docker_email}"
-  docker_auth = "${var.docker_auth}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
 
   dependencies = []
 }
@@ -133,13 +142,16 @@ module "namespace_elastic_system" {
   # ServiceAccount
   helm_service_account = "tiller"
 
+  # CICD
+  ci_name = "octopus"
+
   # Image Pull Secret
-  kubernetes_secret = "${var.kubernetes_secret}"
-  docker_repo = "${var.docker_repo}"
-  docker_username = "${var.docker_username}"
-  docker_password = "${var.docker_password}"
-  docker_email = "${var.docker_email}"
-  docker_auth = "${var.docker_auth}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
 
   dependencies = []
 }
@@ -171,13 +183,16 @@ module "namespace_gatekeeper_system" {
   # ServiceAccount
   helm_service_account = "tiller"
 
+  # CICD
+  ci_name = "octopus"
+
   # Image Pull Secret
-  kubernetes_secret = "${var.kubernetes_secret}"
-  docker_repo = "${var.docker_repo}"
-  docker_username = "${var.docker_username}"
-  docker_password = "${var.docker_password}"
-  docker_email = "${var.docker_email}"
-  docker_auth = "${var.docker_auth}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
 
   dependencies = []
 }
@@ -204,13 +219,16 @@ module "namespace_velero" {
   # ServiceAccount
   helm_service_account = "tiller"
 
+  # CICD
+  ci_name = "octopus"
+
   # Image Pull Secret
-  kubernetes_secret = "${var.kubernetes_secret}"
-  docker_repo = "${var.docker_repo}"
-  docker_username = "${var.docker_username}"
-  docker_password = "${var.docker_password}"
-  docker_email = "${var.docker_email}"
-  docker_auth = "${var.docker_auth}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
 
   dependencies = []
 }
@@ -244,13 +262,16 @@ module "namespace_istio_system" {
   allowed_loadbalancers = "1"
   allowed_nodeports = "9"
 
+  # CICD
+  ci_name = "octopus"
+
   # Image Pull Secret
-  kubernetes_secret = "${var.kubernetes_secret}"
-  docker_repo = "${var.docker_repo}"
-  docker_username = "${var.docker_username}"
-  docker_password = "${var.docker_password}"
-  docker_email = "${var.docker_email}"
-  docker_auth = "${var.docker_auth}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
 
   dependencies = []
 }
@@ -289,13 +310,16 @@ module "namespace_monitoring" {
   # ServiceAccount
   helm_service_account = "tiller"
 
+  # CICD
+  ci_name = "octopus"
+
   # Image Pull Secret
-  kubernetes_secret = "${var.kubernetes_secret}"
-  docker_repo = "${var.docker_repo}"
-  docker_username = "${var.docker_username}"
-  docker_password = "${var.docker_password}"
-  docker_email = "${var.docker_email}"
-  docker_auth = "${var.docker_auth}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
 
   dependencies = []
 }
@@ -340,14 +364,10 @@ data "helm_repository" "stable" {
     url  = "https://kubernetes-charts.storage.googleapis.com"
 }
 
-# Example for Private Helm Registry
-# data "helm_repository" "private" {
-#     name = "private"
-#     url  = "https://registry.${var.ingress_domain}"
-
-#     username = "XXXXX"
-#     password = "XXXXX"
-# }
+data "helm_repository" "private" {
+    name = "statcan"
+    url  = "https://statcan.github.io/charts"
+}
 
 resource "null_resource" "helm_repo_add" {
   triggers = {
@@ -362,9 +382,9 @@ resource "null_resource" "helm_repo_add" {
     command = "helm repo add stable https://kubernetes-charts.storage.googleapis.com"
   }
 
-  # provisioner "local-exec" {
-  #   command = "helm repo add private https://registry.${var.ingress_domain} --username ci --password XXXXX"
-  # }
+  provisioner "local-exec" {
+    command = "helm repo add statcan https://statcan.github.io/charts"
+  }
 }
 
 module "kubectl_eck" {
@@ -388,6 +408,7 @@ module "helm_fluentd" {
 
   helm_service_account = "tiller"
   helm_namespace = "monitoring"
+  helm_repository = "statcan"
 
   values = <<EOF
 image:
@@ -408,6 +429,7 @@ module "helm_istio" {
 
   helm_service_account = "tiller"
   helm_namespace = "istio-system"
+  helm_repository = "istio"
 
   values = <<EOF
 # Use a specific image
@@ -481,7 +503,7 @@ grafana:
       # - secretName: grafana-tls
       #   hosts:
       #     - grafana.local
-      
+
 prometheus:
   enabled: true
 EOF
@@ -498,6 +520,7 @@ module "helm_prometheus_operator" {
 
   helm_service_account = "${module.namespace_monitoring.helm_service_account}"
   helm_namespace = "${module.namespace_monitoring.name}"
+  helm_repository = "statcan"
 
   values = <<EOF
 prometheus-operator:
@@ -575,6 +598,7 @@ module "helm_velero" {
 
   helm_service_account = "tiller"
   helm_namespace = "velero"
+  helm_repository = "statcan"
 
   backup_storage_resource_group = "${var.velero_backup_storage_resource_group}"
   backup_storage_account = "${var.velero_backup_storage_account}"
