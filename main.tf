@@ -234,6 +234,7 @@ module "namespace_velero" {
 }
 
 # Istio System
+
 resource "kubernetes_namespace" "istio_system" {
   metadata {
     name = "istio-system"
@@ -286,6 +287,7 @@ resource "null_resource" "kube_system" {
 }
 
 # Monitoring
+
 resource "kubernetes_namespace" "monitoring" {
   metadata {
     name = "monitoring"
@@ -421,7 +423,7 @@ module "helm_fluentd" {
 
   values = <<EOF
 image:
-  pullSecret: registry-prod
+  pullSecret: registry
 
 rbac:
   create: yes

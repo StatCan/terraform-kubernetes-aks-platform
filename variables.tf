@@ -1,25 +1,31 @@
 variable "docker_repo" {
   description = "A repository url used as part of the image pull secret"
+  default = ""
 }
 
 variable "docker_username" {
   description = "A username used as part of the image pull secret"
+  default = ""
 }
 
 variable "docker_password" {
   description = "A password used as part of the image pull secret"
+  default = ""
 }
 
 variable "docker_email" {
   description = "A email used as part of the image pull secret"
+  default = ""
 }
 
 variable "docker_auth" {
   description = "A authorization code used as part of the image pull secret"
+  default = ""
 }
 
 variable "ingress_domain" {
   description = "The domain used for the majority of the platform services."
+  default = ""
 }
 
 variable "kubernetes_client_id" {
@@ -37,8 +43,14 @@ variable "kubernetes_rbac_group" {
   default = ""
 }
 
+variable "enable_kubernetes_secret" {
+  description = "The Secret to use for the image pull secret for this Managed Kubernetes Cluster"
+  default = ""
+}
+
 variable "kubernetes_secret" {
   description = "The Secret to use for the image pull secret for this Managed Kubernetes Cluster"
+  default = ""
 }
 
 variable "velero_backup_storage_account" {
