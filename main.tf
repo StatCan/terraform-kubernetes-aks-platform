@@ -1,6 +1,6 @@
 terraform {
   backend "azurerm" {
-    storage_account_name  = "terraform-k8s"
+    storage_account_name  = "terraformkubernetes"
     container_name        = "k8s-tfstate"
     key                   = "aks-platform-development.terraform.tfstate"
   }
@@ -21,7 +21,7 @@ module "namespace_default" {
   helm_service_account = "tiller"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "argo"
 
   # Image Pull Secret
   # kubernetes_secret = "${var.kubernetes_secret}"
@@ -61,7 +61,7 @@ module "namespace_ci" {
   helm_service_account = "tiller"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "argo"
 
   # Image Pull Secret
   # kubernetes_secret = "${var.kubernetes_secret}"
@@ -105,7 +105,7 @@ module "namespace_drupal" {
   allowed_nodeports = "10"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "argo"
 
   # Image Pull Secret
   # kubernetes_secret = "${var.kubernetes_secret}"
@@ -143,7 +143,7 @@ module "namespace_elastic_system" {
   helm_service_account = "tiller"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "argo"
 
   # Image Pull Secret
   # kubernetes_secret = "${var.kubernetes_secret}"
@@ -184,7 +184,7 @@ module "namespace_gatekeeper_system" {
   helm_service_account = "tiller"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "argo"
 
   # Image Pull Secret
   # kubernetes_secret = "${var.kubernetes_secret}"
@@ -220,7 +220,7 @@ module "namespace_velero" {
   helm_service_account = "tiller"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "argo"
 
   # Image Pull Secret
   # kubernetes_secret = "${var.kubernetes_secret}"
@@ -263,7 +263,7 @@ module "namespace_istio_system" {
   allowed_nodeports = "9"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "argo"
 
   # Image Pull Secret
   # kubernetes_secret = "${var.kubernetes_secret}"
@@ -311,7 +311,7 @@ module "namespace_monitoring" {
   helm_service_account = "tiller"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "argo"
 
   # Image Pull Secret
   # kubernetes_secret = "${var.kubernetes_secret}"
@@ -364,7 +364,12 @@ data "helm_repository" "stable" {
     url  = "https://kubernetes-charts.storage.googleapis.com"
 }
 
-data "helm_repository" "private" {
+data "helm_repository" "drupalwxt" {
+    name = "drupalwxt"
+    url  = "https://drupalwxt.github.io/helm-drupal"
+}
+
+data "helm_repository" "statcan" {
     name = "statcan"
     url  = "https://statcan.github.io/charts"
 }
@@ -380,6 +385,10 @@ resource "null_resource" "helm_repo_add" {
 
   provisioner "local-exec" {
     command = "helm repo add stable https://kubernetes-charts.storage.googleapis.com"
+  }
+
+  provisioner "local-exec" {
+    command = "helm repo add drupalwxt https://drupalwxt.github.io/helm-drupal"
   }
 
   provisioner "local-exec" {
@@ -622,6 +631,97 @@ velero:
       name: azure
 EOF
 }
+
+# module "helm_drupalwxt" {
+#   source = "git::https://github.com/drupalwxt/terraform-kubernetes-drupalwxt.git"
+
+#   chart_version = "0.1.0"
+#   dependencies = [
+#     "${module.namespace_default.depended_on}",
+#   ]
+
+#   helm_service_account = "tiller"
+#   helm_namespace = "default"
+#   helm_repository = "drupalwxt"
+
+#   values = <<EOF
+# drupal:
+#   tag: latest
+
+#   # php-fpm healthcheck
+#   # Requires https://github.com/renatomefi/php-fpm-healthcheck in the container.
+#   # (note: official images do not contain this feature yet)
+#   healthcheck:
+#     enabled: true
+
+#   # Switch to canada.ca theme
+#   # Common options include: theme-wet-boew, theme-gcweb-legacy
+#   wxtTheme: theme-gcweb
+
+#   # Run the site install
+#   install: true
+
+#   # Run the default migrations
+#   migrate: true
+
+#   # Reconfigure the site
+#   reconfigure: true
+
+# nginx:
+#   # Set your cluster's DNS resolution service here
+#   resolver: 10.0.0.10
+
+# mysql:
+#   imageTag: 5.7.26
+
+#   mysqlPassword: SUPERsecureMYSQLpassword
+#   mysqlRootPassword: SUPERsecureMYSQLrootPASSWORD
+#   persistence:
+#     enabled: true
+
+# ##
+# ## MINIO-ONLY EXAMPLE
+# ##
+# minio:
+#   persistence:
+#     enabled: true
+#   defaultBucket:
+#     enabled: true
+
+# ##
+# ## AZURE EXAMPLE
+# ##
+# # files:
+# #   cname:
+# #     enabled: true
+# #     hostname: wxt.blob.core.windows.net
+
+# # minio:
+# #   clusterDomain: cluster.cumulonimbus.zacharyseguin.ca
+# #   # Enable the Azure Gateway mode
+# #   azuregateway:
+# #     enabled: true
+
+# #   # Access Key should be set to the Azure Storage Account name
+# #   # Secret Key should be set to the Azure Storage Account access key
+# #   accessKey: STORAGE_ACCOUNT_NAME
+# #   secretKey: STORAGE_ACCOUNT_ACCESS_KEY
+
+# #   # Disable creation of default bucket.
+# #   # You should pre-create the bucket in Azure.
+# #   defaultBucket:
+# #     enabled: false
+# #     name: wxt
+
+# #   # We want a cluster ip assigned
+# #   service:
+# #     clusterIP: ''
+
+# #   # We don't need a persistent volume, since it's stored in Azure
+# #   persistence:
+# #     enabled: false
+# EOF
+# }
 
 module "kubectl_opa" {
   source = "git::https://github.com/statcan/terraform-kubernetes-open-policy-agent.git"
