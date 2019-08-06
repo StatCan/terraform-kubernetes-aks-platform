@@ -659,6 +659,7 @@ EOF
 #   #  - secretName: chart-example-tls
 #   #    hosts:
 #   #      - chart-example.local
+
 # drupal:
 #   tag: latest
 
