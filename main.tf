@@ -24,6 +24,7 @@ module "namespace_default" {
   ci_name = "argo"
 
   # Image Pull Secret
+  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
   # kubernetes_secret = "${var.kubernetes_secret}"
   # docker_repo = "${var.docker_repo}"
   # docker_username = "${var.docker_username}"
@@ -64,6 +65,7 @@ module "namespace_ci" {
   ci_name = "argo"
 
   # Image Pull Secret
+  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
   # kubernetes_secret = "${var.kubernetes_secret}"
   # docker_repo = "${var.docker_repo}"
   # docker_username = "${var.docker_username}"
@@ -108,6 +110,7 @@ module "namespace_ci" {
 #   ci_name = "argo"
 
 #   # Image Pull Secret
+#   # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
 #   # kubernetes_secret = "${var.kubernetes_secret}"
 #   # docker_repo = "${var.docker_repo}"
 #   # docker_username = "${var.docker_username}"
@@ -146,6 +149,7 @@ module "namespace_elastic_system" {
   ci_name = "argo"
 
   # Image Pull Secret
+  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
   # kubernetes_secret = "${var.kubernetes_secret}"
   # docker_repo = "${var.docker_repo}"
   # docker_username = "${var.docker_username}"
@@ -187,6 +191,7 @@ module "namespace_gatekeeper_system" {
   ci_name = "argo"
 
   # Image Pull Secret
+  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
   # kubernetes_secret = "${var.kubernetes_secret}"
   # docker_repo = "${var.docker_repo}"
   # docker_username = "${var.docker_username}"
@@ -223,6 +228,7 @@ module "namespace_velero" {
   ci_name = "argo"
 
   # Image Pull Secret
+  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
   # kubernetes_secret = "${var.kubernetes_secret}"
   # docker_repo = "${var.docker_repo}"
   # docker_username = "${var.docker_username}"
@@ -267,6 +273,7 @@ module "namespace_istio_system" {
   ci_name = "argo"
 
   # Image Pull Secret
+  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
   # kubernetes_secret = "${var.kubernetes_secret}"
   # docker_repo = "${var.docker_repo}"
   # docker_username = "${var.docker_username}"
@@ -316,6 +323,7 @@ module "namespace_monitoring" {
   ci_name = "argo"
 
   # Image Pull Secret
+  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
   # kubernetes_secret = "${var.kubernetes_secret}"
   # docker_repo = "${var.docker_repo}"
   # docker_username = "${var.docker_username}"
