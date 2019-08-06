@@ -41,9 +41,7 @@ resource "kubernetes_namespace" "ci" {
   metadata {
     name = "ci"
 
-    labels = {
-      istio-injection = "enabled"
-    }
+    labels = {}
   }
 }
 
