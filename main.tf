@@ -643,10 +643,22 @@ EOF
 #   ]
 
 #   helm_service_account = "tiller"
-#   helm_namespace = "default"
+#   helm_namespace = "drupal"
 #   helm_repository = "drupalwxt"
 
 #   values = <<EOF
+# ingress:
+#   enabled: true
+#   annotations: {}
+#     # kubernetes.io/ingress.class: nginx
+#     # kubernetes.io/tls-acme: "true"
+#   path: /
+#   hosts:
+#     - drupalwxt.${var.ingress_domain}
+#   tls: []
+#   #  - secretName: chart-example-tls
+#   #    hosts:
+#   #      - chart-example.local
 # drupal:
 #   tag: latest
 
