@@ -1,0 +1,19 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: wildcard
+  namespace: istio-system
+spec:
+  secretName: wildcard-tls
+  commonName: "*.${ ingress_domain }"
+  dnsNames:
+  - "*.${ ingress_domain }"
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  acme:
+    config:
+      - dns01:
+          provider: azure-dns
+        domains:
+          - "*.${ ingress_domain }"

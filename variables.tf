@@ -53,6 +53,34 @@ variable "kubernetes_secret" {
   default = ""
 }
 
+variable "cert_manager_letsencrypt_email" {
+  description = "The lets encrypt email to use for Cert Manager"
+}
+
+variable "cert_manager_azure_service_principal_id" {
+  description = "The service principal to use for Cert Manager"
+}
+
+variable "cert_manager_azure_client_secret" {
+  description = "The client secret of s.p. to use for Cert Manager"
+}
+
+variable "cert_manager_azure_subscription_id" {
+  description = "The subscription id to use for Cert Manager"
+}
+
+variable "cert_manager_azure_tenant_id" {
+  description = "The tenant id to use for Cert Manager"
+}
+
+variable "cert_manager_azure_resource_group_name" {
+  description = "The resource group name to use for Cert Manager"
+}
+
+variable "cert_manager_azure_zone_name" {
+  description = "The lets encrypt email to use for Cert Manager"
+}
+
 variable "velero_backup_storage_account" {
   description = "The storage account to use for the storage of cluster state"
 }

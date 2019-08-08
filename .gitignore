@@ -5,3 +5,4 @@ plan
 *.tfstate
 *.tfstate.backup
 terraform.tfvars
+generated

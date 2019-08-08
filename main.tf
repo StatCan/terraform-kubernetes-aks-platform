@@ -74,6 +74,47 @@ module "namespace_ci" {
   dependencies = []
 }
 
+# Cert Manager
+
+resource "kubernetes_namespace" "cert_manager" {
+  metadata {
+    name = "cert-manager"
+
+    labels = {
+      "certmanager.k8s.io/disable-validation" = "true"
+    }
+  }
+}
+
+module "namespace_cert_manager" {
+  source = "git::https://github.com/statcan/terraform-kubernetes-namespace.git"
+
+  name = "${kubernetes_namespace.cert_manager.metadata.0.name}"
+  namespace_admins = {
+    users = []
+    groups = [
+      "${var.kubernetes_rbac_group}"
+    ]
+  }
+
+  # ServiceAccount
+  helm_service_account = "tiller"
+
+  # CICD
+  ci_name = "octopus"
+
+  # Image Pull Secret
+  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
+  # kubernetes_secret = "${var.kubernetes_secret}"
+  # docker_repo = "${var.docker_repo}"
+  # docker_username = "${var.docker_username}"
+  # docker_password = "${var.docker_password}"
+  # docker_email = "${var.docker_email}"
+  # docker_auth = "${var.docker_auth}"
+
+  dependencies = []
+}
+
 # Drupal
 
 # resource "kubernetes_namespace" "drupal" {
@@ -282,6 +323,15 @@ module "namespace_istio_system" {
   dependencies = []
 }
 
+# Default
+
+resource "null_resource" "default" {
+
+  provisioner "local-exec" {
+    command = "kubectl label ns default control-plane=default --overwrite"
+  }
+}
+
 # KUBE-SYSTEM
 
 resource "null_resource" "kube_system" {
@@ -349,11 +399,13 @@ resource "kubernetes_cluster_role" "tiller" {
       "admissionregistration.k8s.io",
       "rbac.authorization.k8s.io",
       "apiextensions.k8s.io",
+      "apiregistration.k8s.io",
       "networking.k8s.io",
       "networking.istio.io",
       "authentication.istio.io",
       "config.istio.io",
-      "monitoring.coreos.com"
+      "monitoring.coreos.com",
+      "certmanager.k8s.io"
     ]
     resources = ["*"]
     verbs = ["*"]
@@ -392,6 +444,10 @@ resource "null_resource" "helm_repo_add" {
   }
 
   provisioner "local-exec" {
+    command = "helm repo add jetstack https://charts.jetstack.io"
+  }
+
+  provisioner "local-exec" {
     command = "helm repo add stable https://kubernetes-charts.storage.googleapis.com"
   }
 
@@ -414,6 +470,139 @@ module "kubectl_eck" {
   kubectl_service_account = "${module.namespace_elastic_system.helm_service_account}"
   kubectl_namespace = "${module.namespace_elastic_system.name}"
 }
+
+module "helm_cert_manager" {
+  source = "git::https://github.com/statcan/terraform-kubernetes-cert-manager.git"
+
+  chart_version = "0.8.1"
+  dependencies = [
+    "${module.namespace_cert_manager.depended_on}",
+  ]
+
+  helm_service_account = "tiller"
+  helm_namespace = "${kubernetes_namespace.cert_manager.metadata.0.name}"
+  helm_repository = "jetstack"
+
+  letsencrypt_email = "${var.cert_manager_letsencrypt_email}"
+  azure_service_principal_id = "${var.cert_manager_azure_service_principal_id}"
+  azure_client_secret = "${var.cert_manager_azure_client_secret}"
+  azure_subscription_id = "${var.cert_manager_azure_subscription_id}"
+  azure_tenant_id = "${var.cert_manager_azure_tenant_id}"
+  azure_resource_group_name = "${var.cert_manager_azure_resource_group_name}"
+  azure_zone_name = "${var.cert_manager_azure_zone_name}"
+
+  values = <<EOF
+podDnsConfig:
+  nameservers:
+    - 1.1.1.1
+    - 1.0.0.1
+    - 8.8.8.8
+EOF
+}
+
+# module "helm_drupalwxt" {
+#   source = "git::https://github.com/drupalwxt/terraform-kubernetes-drupalwxt.git"
+
+#   chart_version = "0.1.0"
+#   dependencies = [
+#     "${module.namespace_default.depended_on}",
+#   ]
+
+#   helm_service_account = "tiller"
+#   helm_namespace = "drupal"
+#   helm_repository = "drupalwxt"
+
+#   values = <<EOF
+# ingress:
+#   enabled: true
+#   annotations: {}
+#     # kubernetes.io/ingress.class: nginx
+#     # kubernetes.io/tls-acme: "true"
+#   path: /
+#   hosts:
+#     - drupalwxt.${var.ingress_domain}
+#   tls: []
+#   #  - secretName: chart-example-tls
+#   #    hosts:
+#   #      - chart-example.local
+
+# drupal:
+#   tag: latest
+
+#   # php-fpm healthcheck
+#   # Requires https://github.com/renatomefi/php-fpm-healthcheck in the container.
+#   # (note: official images do not contain this feature yet)
+#   healthcheck:
+#     enabled: true
+
+#   # Switch to canada.ca theme
+#   # Common options include: theme-wet-boew, theme-gcweb-legacy
+#   wxtTheme: theme-gcweb
+
+#   # Run the site install
+#   install: true
+
+#   # Run the default migrations
+#   migrate: true
+
+#   # Reconfigure the site
+#   reconfigure: true
+
+# nginx:
+#   # Set your cluster's DNS resolution service here
+#   resolver: 10.0.0.10
+
+# mysql:
+#   imageTag: 5.7.26
+
+#   mysqlPassword: SUPERsecureMYSQLpassword
+#   mysqlRootPassword: SUPERsecureMYSQLrootPASSWORD
+#   persistence:
+#     enabled: true
+
+# ##
+# ## MINIO-ONLY EXAMPLE
+# ##
+# minio:
+#   persistence:
+#     enabled: true
+#   defaultBucket:
+#     enabled: true
+
+# ##
+# ## AZURE EXAMPLE
+# ##
+# # files:
+# #   cname:
+# #     enabled: true
+# #     hostname: wxt.blob.core.windows.net
+
+# # minio:
+# #   clusterDomain: cluster.cumulonimbus.zacharyseguin.ca
+# #   # Enable the Azure Gateway mode
+# #   azuregateway:
+# #     enabled: true
+
+# #   # Access Key should be set to the Azure Storage Account name
+# #   # Secret Key should be set to the Azure Storage Account access key
+# #   accessKey: STORAGE_ACCOUNT_NAME
+# #   secretKey: STORAGE_ACCOUNT_ACCESS_KEY
+
+# #   # Disable creation of default bucket.
+# #   # You should pre-create the bucket in Azure.
+# #   defaultBucket:
+# #     enabled: false
+# #     name: wxt
+
+# #   # We want a cluster ip assigned
+# #   service:
+# #     clusterIP: ''
+
+# #   # We don't need a persistent volume, since it's stored in Azure
+# #   persistence:
+# #     enabled: false
+# EOF
+# }
 
 module "helm_fluentd" {
   source = "git::https://github.com/statcan/terraform-kubernetes-fluentd.git"
@@ -479,8 +668,8 @@ gateways:
   istio-ingressgateway:
     sds:
       enabled: true
-    serviceAnnotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: 'true'
+    # serviceAnnotations:
+    #   service.beta.kubernetes.io/azure-load-balancer-internal: 'true'
 
 kiali:
   enabled: true
@@ -640,110 +829,6 @@ velero:
 EOF
 }
 
-# module "helm_drupalwxt" {
-#   source = "git::https://github.com/drupalwxt/terraform-kubernetes-drupalwxt.git"
-
-#   chart_version = "0.1.0"
-#   dependencies = [
-#     "${module.namespace_default.depended_on}",
-#   ]
-
-#   helm_service_account = "tiller"
-#   helm_namespace = "drupal"
-#   helm_repository = "drupalwxt"
-
-#   values = <<EOF
-# ingress:
-#   enabled: true
-#   annotations: {}
-#     # kubernetes.io/ingress.class: nginx
-#     # kubernetes.io/tls-acme: "true"
-#   path: /
-#   hosts:
-#     - drupalwxt.${var.ingress_domain}
-#   tls: []
-#   #  - secretName: chart-example-tls
-#   #    hosts:
-#   #      - chart-example.local
-
-# drupal:
-#   tag: latest
-
-#   # php-fpm healthcheck
-#   # Requires https://github.com/renatomefi/php-fpm-healthcheck in the container.
-#   # (note: official images do not contain this feature yet)
-#   healthcheck:
-#     enabled: true
-
-#   # Switch to canada.ca theme
-#   # Common options include: theme-wet-boew, theme-gcweb-legacy
-#   wxtTheme: theme-gcweb
-
-#   # Run the site install
-#   install: true
-
-#   # Run the default migrations
-#   migrate: true
-
-#   # Reconfigure the site
-#   reconfigure: true
-
-# nginx:
-#   # Set your cluster's DNS resolution service here
-#   resolver: 10.0.0.10
-
-# mysql:
-#   imageTag: 5.7.26
-
-#   mysqlPassword: SUPERsecureMYSQLpassword
-#   mysqlRootPassword: SUPERsecureMYSQLrootPASSWORD
-#   persistence:
-#     enabled: true
-
-# ##
-# ## MINIO-ONLY EXAMPLE
-# ##
-# minio:
-#   persistence:
-#     enabled: true
-#   defaultBucket:
-#     enabled: true
-
-# ##
-# ## AZURE EXAMPLE
-# ##
-# # files:
-# #   cname:
-# #     enabled: true
-# #     hostname: wxt.blob.core.windows.net
-
-# # minio:
-# #   clusterDomain: cluster.cumulonimbus.zacharyseguin.ca
-# #   # Enable the Azure Gateway mode
-# #   azuregateway:
-# #     enabled: true
-
-# #   # Access Key should be set to the Azure Storage Account name
-# #   # Secret Key should be set to the Azure Storage Account access key
-# #   accessKey: STORAGE_ACCOUNT_NAME
-# #   secretKey: STORAGE_ACCOUNT_ACCESS_KEY
-
-# #   # Disable creation of default bucket.
-# #   # You should pre-create the bucket in Azure.
-# #   defaultBucket:
-# #     enabled: false
-# #     name: wxt
-
-# #   # We want a cluster ip assigned
-# #   service:
-# #     clusterIP: ''
-
-# #   # We don't need a persistent volume, since it's stored in Azure
-# #   persistence:
-# #     enabled: false
-# EOF
-# }
-
 module "kubectl_opa" {
   source = "git::https://github.com/statcan/terraform-kubernetes-open-policy-agent.git"
 
@@ -813,4 +898,38 @@ resource "kubernetes_role" "dashboard-user" {
     resource_names = ["https:kubernetes-dashboard:"]
     verbs = ["get", "create"]
   }
+}
+
+# Certificates
+
+resource "local_file" "cert_wildcard" {
+  content = "${templatefile("${path.module}/config/wildcard.yaml", {
+    ingress_domain = "${var.ingress_domain}"
+  })}"
+
+  filename = "${path.module}/generated/wildcard.yaml"
+}
+
+resource "null_resource" "cert_wildcard" {
+  provisioner "local-exec" {
+    command = "kubectl apply -f ${local_file.cert_wildcard.filename}"
+  }
+
+  depends_on = [
+    "module.helm_cert_manager"
+  ]
+}
+
+resource "null_resource" "add_https_to_ingress_gateway" {
+  provisioner "local-exec" {
+    command = "kubectl -n istio-system patch gateway istio-autogenerated-k8s-ingress --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/servers/1/tls\", \"value\": {\"credentialName\": \"wildcard-tls\", \"mode\": \"SIMPLE\", \"privateKey\": \"sds\", \"serverCertificate\": \"sds\"}}]'"
+  }
+
+  provisioner "local-exec" {
+    command = "kubectl -n istio-system patch gateway istio-autogenerated-k8s-ingress --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/servers/0/tls\", \"value\": {\"httpsRedirect\": true}}]'"
+  }
+
+  depends_on = [
+    "module.helm_istio"
+  ]
 }

@@ -13,6 +13,16 @@ enable_kubernetes_secret = "0"
 kubernetes_rbac_group = ""
 ingress_domain = ""
 
+# Cert Manager
+
+letsencrypt_email = ""
+azure_service_principal_id = ""
+azure_client_secret = ""
+azure_subscription_id = ""
+azure_tenant_id = ""
+azure_resource_group_name = ""
+azure_zone_name = ""
+
 # Velero
 velero_backup_storage_resource_group = ""
 velero_backup_storage_account = ""
