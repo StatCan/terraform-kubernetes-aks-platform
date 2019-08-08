@@ -15,13 +15,13 @@ ingress_domain = ""
 
 # Cert Manager
 
-letsencrypt_email = ""
-azure_service_principal_id = ""
-azure_client_secret = ""
-azure_subscription_id = ""
-azure_tenant_id = ""
-azure_resource_group_name = ""
-azure_zone_name = ""
+cert_manager_letsencrypt_email = ""
+cert_manager_azure_service_principal_id = ""
+cert_manager_azure_client_secret = ""
+cert_manager_azure_subscription_id = ""
+cert_manager_azure_tenant_id = ""
+cert_manager_azure_resource_group_name = ""
+cert_manager_azure_zone_name = ""
 
 # Velero
 velero_backup_storage_resource_group = ""
