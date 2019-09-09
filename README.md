@@ -6,7 +6,18 @@ The overall flow for this module is pretty simple:
 * Create Azure AKS Platform configuration in a modular manner
 * Deploy the infrastructure incrementally
 
-## Init
+## Security Controls
+
+The following security controls can be met through configuration of this template:
+
+* TBD
+
+## Dependencies
+
+* None
+
+
+## Usage
 
 Ensure you have exported the ARM access key for storage account.
 
@@ -23,14 +34,20 @@ terraform init\
     -backend-config="key=aks-platform-development.terraform.tfstate"
 ```
 
-## Plan
+### Plan
 
 ```sh
 terraform plan -out plan
 ```
 
-## Apply
+### Apply
 
 ```sh
 terraform apply plan
 ```
+
+## History
+
+| Date     | Release    | Change      |
+| -------- | ---------- | ----------- |
+| 20190909 | 20190909.1 | 1st release |
