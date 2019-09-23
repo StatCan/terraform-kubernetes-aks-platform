@@ -5,8 +5,7 @@ resource "kubernetes_namespace" "gatekeeper_system" {
     name = "gatekeeper-system"
 
     labels = {
-      control-plane = "gatekeeper-system",
-      istio-injection = "enabled"
+      control-plane = "gatekeeper-system"
     }
   }
 }
