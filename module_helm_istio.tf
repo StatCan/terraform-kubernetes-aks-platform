@@ -1,7 +1,7 @@
 module "helm_istio" {
   source = "git::https://github.com/statcan/terraform-kubernetes-istio.git"
 
-  chart_version = "1.1.11"
+  chart_version = "1.3.1"
   dependencies = [
     "${module.namespace_istio_system.depended_on}",
   ]
@@ -9,6 +9,9 @@ module "helm_istio" {
   helm_service_account = "tiller"
   helm_namespace = "istio-system"
   helm_repository = "istio"
+
+  kiali_username = "admin"
+  kiali_password = "admin"
 
   values = <<EOF
 # Use a specific image

@@ -1,11 +1,9 @@
-
-
 # module "helm_drupalwxt" {
 #   source = "git::https://github.com/drupalwxt/terraform-kubernetes-drupalwxt.git"
 
-#   chart_version = "0.1.0"
+#   chart_version = "0.1.3"
 #   dependencies = [
-#     "${module.namespace_default.depended_on}",
+#     "${module.namespace_drupal.depended_on}",
 #   ]
 
 #   helm_service_account = "tiller"
@@ -15,10 +13,11 @@
 #   values = <<EOF
 # ingress:
 #   enabled: true
-#   annotations: {}
+#   annotations:
 #     # kubernetes.io/ingress.class: nginx
 #     # kubernetes.io/tls-acme: "true"
-#   path: /
+#     kubernetes.io/ingress.class: istio
+#   path: /*
 #   hosts:
 #     - drupalwxt.${var.ingress_domain}
 #   tls: []
@@ -27,13 +26,13 @@
 #   #      - chart-example.local
 
 # drupal:
-#   tag: latest
+#   tag: 3.0.0-rc1
 
 #   # php-fpm healthcheck
 #   # Requires https://github.com/renatomefi/php-fpm-healthcheck in the container.
 #   # (note: official images do not contain this feature yet)
 #   healthcheck:
-#     enabled: true
+#     enabled: false
 
 #   # Switch to canada.ca theme
 #   # Common options include: theme-wet-boew, theme-gcweb-legacy
@@ -59,6 +58,8 @@
 #   mysqlRootPassword: SUPERsecureMYSQLrootPASSWORD
 #   persistence:
 #     enabled: true
+#     storageClass: managed-premium
+#     size: 512Gi
 
 # ##
 # ## MINIO-ONLY EXAMPLE
@@ -103,10 +104,3 @@
 # #     enabled: false
 # EOF
 # }
-
-
-
-
-
-
-

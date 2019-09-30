@@ -13,6 +13,7 @@ module "helm_fluentd" {
   values = <<EOF
 image:
   pullSecret: registry
+  repository: statcan/kube-fluentd-operator
 
 rbac:
   create: yes

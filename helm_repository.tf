@@ -2,7 +2,7 @@
 
 data "helm_repository" "istio" {
     name = "istio"
-    url  = "https://storage.googleapis.com/istio-release/releases/1.1.11/charts"
+    url  = "https://storage.googleapis.com/istio-release/releases/1.3.1/charts"
 }
 
 data "helm_repository" "stable" {
@@ -26,7 +26,7 @@ resource "null_resource" "helm_repo_add" {
   }
 
   provisioner "local-exec" {
-    command = "helm repo add istio https://storage.googleapis.com/istio-release/releases/1.1.11/charts"
+    command = "helm repo add istio https://storage.googleapis.com/istio-release/releases/1.3.1/charts"
   }
 
   provisioner "local-exec" {
