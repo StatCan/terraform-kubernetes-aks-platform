@@ -49,7 +49,7 @@ gateways:
 
 kiali:
   enabled: true
-  contextPath: /
+  contextPath: /*
   ingress:
     enabled: true
     ## Used to create an Ingress record.
@@ -70,7 +70,7 @@ kiali:
 
 grafana:
   enabled: true
-  contextPath: /
+  contextPath: /*
   ingress:
     enabled: true
     ## Used to create an Ingress record.

@@ -1,7 +1,7 @@
 # module "helm_drupalwxt" {
 #   source = "git::https://github.com/drupalwxt/terraform-kubernetes-drupalwxt.git"
 
-#   chart_version = "0.1.3"
+#   chart_version = "0.1.4"
 #   dependencies = [
 #     "${module.namespace_drupal.depended_on}",
 #   ]
@@ -26,7 +26,7 @@
 #   #      - chart-example.local
 
 # drupal:
-#   tag: 3.0.0-rc1
+#   tag: 3.0.0-rc2
 
 #   # php-fpm healthcheck
 #   # Requires https://github.com/renatomefi/php-fpm-healthcheck in the container.
@@ -59,7 +59,7 @@
 #   persistence:
 #     enabled: true
 #     storageClass: managed-premium
-#     size: 512Gi
+#     size: 256Gi
 
 # ##
 # ## MINIO-ONLY EXAMPLE

@@ -39,7 +39,8 @@ prometheus-operator:
       enabled: true
       hosts:
         - prometheus.${var.ingress_domain}
-      path: /.*
+      paths: 
+        - /.*
       annotations:
         kubernetes.io/ingress.class: istio
 
@@ -58,7 +59,8 @@ prometheus-operator:
       enabled: true
       hosts:
         - alertmanager.${var.ingress_domain}
-      path: /.*
+      paths: 
+        - /.*
       annotations:
         kubernetes.io/ingress.class: istio
 
