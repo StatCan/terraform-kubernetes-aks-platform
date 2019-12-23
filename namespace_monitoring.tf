@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "monitoring" {
 }
 
 module "namespace_monitoring" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-namespace.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
 
   name = "${kubernetes_namespace.monitoring.metadata.0.name}"
   namespace_admins = {

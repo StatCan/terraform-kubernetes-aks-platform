@@ -1,8 +1,8 @@
-# # Drupal
+# # vault
 
-# resource "kubernetes_namespace" "drupal" {
+# resource "kubernetes_namespace" "vault" {
 #   metadata {
-#     name = "drupal"
+#     name = "vault"
 
 #     labels = {
 #       istio-injection = "enabled"
@@ -10,10 +10,10 @@
 #   }
 # }
 
-# module "namespace_drupal" {
+# module "namespace_vault" {
 #   source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
 
-#   name = "${kubernetes_namespace.drupal.metadata.0.name}"
+#   name = "${kubernetes_namespace.vault.metadata.0.name}"
 #   namespace_admins = {
 #     users = []
 #     groups = [
@@ -23,10 +23,6 @@
 
 #   # ServiceAccount
 #   helm_service_account = "tiller"
-
-#   # ServiceQuota Overrides
-#   allowed_loadbalancers = "10"
-#   allowed_nodeports = "10"
 
 #   # CICD
 #   ci_name = "argo"

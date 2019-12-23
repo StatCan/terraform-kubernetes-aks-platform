@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "istio_system" {
 }
 
 module "namespace_istio_system" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-namespace.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
 
   name = "${kubernetes_namespace.istio_system.metadata.0.name}"
   namespace_admins = {

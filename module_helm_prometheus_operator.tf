@@ -1,5 +1,5 @@
 module "helm_prometheus_operator" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-prometheus.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-prometheus.git"
 
   chart_version = "0.0.2"
   dependencies = [
@@ -32,14 +32,14 @@ prometheus-operator:
       enabled: true
       storageClassName: default
       accessModes: ["ReadWriteOnce"]
-      size: 20Gi
+      size: 10Gi
 
   prometheus:
     ingress:
       enabled: true
       hosts:
         - prometheus.${var.ingress_domain}
-      paths: 
+      paths:
         - /.*
       annotations:
         kubernetes.io/ingress.class: istio
@@ -52,14 +52,14 @@ prometheus-operator:
             storageClassName: default
             resources:
               requests:
-                storage: 20Gi
+                storage: 10Gi
 
   alertmanager:
     ingress:
       enabled: true
       hosts:
         - alertmanager.${var.ingress_domain}
-      paths: 
+      paths:
         - /.*
       annotations:
         kubernetes.io/ingress.class: istio
@@ -72,7 +72,7 @@ prometheus-operator:
             storageClassName: default
             resources:
               requests:
-                storage: 20Gi
+                storage: 10Gi
 
 destinationRule:
   enabled: true

@@ -1,5 +1,5 @@
 module "kubectl_eck" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-elastic-cloud.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-elastic-cloud.git"
 
   dependencies = [
     "${module.namespace_elastic_system.depended_on}",

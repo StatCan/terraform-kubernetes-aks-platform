@@ -1,5 +1,5 @@
 module "helm_istio" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-istio.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-istio.git"
 
   chart_version = "1.3.1"
   dependencies = [

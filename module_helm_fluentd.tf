@@ -1,5 +1,5 @@
 module "helm_fluentd" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-fluentd.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-fluentd.git"
 
   chart_version = "0.0.2"
   dependencies = [

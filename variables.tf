@@ -112,3 +112,55 @@ variable "velero_azure_subscription_id" {
 variable "velero_azure_tenant_id" {
   description = "The azure tenant id to use for backing up cluster virtual machines/disks"
 }
+
+variable "vault_azure_sa_name" {
+  description = "The storage account name used for vault"
+}
+
+variable "vault_azure_sa_key" {
+  description = "The storage account key used for vault"
+}
+
+variable "vault_azure_sa_container" {
+  description = "The storage account container name used for vault"
+}
+
+variable "vault_azure_kv_tenant_id" {
+  description = "The vault service principal tenant id"
+}
+
+variable "vault_azure_kv_client_id" {
+  description = "The vault service principal client id"
+}
+
+variable "vault_azure_kv_client_secret" {
+  description = "The vault service principal client secret"
+}
+
+variable "vault_azure_kv_vault_name" {
+  description = "The vault key vault name"
+}
+
+variable "vault_azure_kv_key_name" {
+  description = "The vault key vault key"
+}
+
+variable "vault_aad_resource_id" {
+  description = "Vault AAD Resource ID"
+}
+variable "vault_aad_client_id" {
+  description = "Vault AAD Client ID"
+}
+
+variable "enable_azurefile" {
+  description = "Enable adding a storage class that supports Azure File"
+  default = ""
+}
+
+variable "azurefile_location_name" {
+  description = "The location (region) of the storage account to be used for the Storage Class"
+}
+
+variable "azurefile_storage_account_name" {
+  description = "The storage account named to be used for the Storage Class"
+}

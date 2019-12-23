@@ -1,5 +1,5 @@
 module "kubectl_opa" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-open-policy-agent.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-open-policy-agent.git"
 
   dependencies = [
     "${module.namespace_gatekeeper_system.depended_on}",

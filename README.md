@@ -22,6 +22,8 @@ The following security controls can be met through configuration of this templat
 
 > Note: You will need to add a client secret and grant admin consent to `k8s_velero_${prefix}` service principal in Azure AD.
 
+> Note: You will need to add `k8s_velero_${prefix}` as role type `Contributor` to the Velero storage account
+
 2. Ensure you have exported the `ARM_ACCESS_KEY` for the Terraform backend storage account.
 
 ```sh

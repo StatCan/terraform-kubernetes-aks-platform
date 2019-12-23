@@ -1,0 +1,14 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: azurefile
+provisioner: kubernetes.io/azure-file
+mountOptions:
+  - dir_mode=0755
+  - file_mode=0644
+  - mfsymlinks
+  - nobrl
+  - cache=none
+parameters:
+  storageAccount: ${ azurefile_storage_account_name }
+  location: ${ azurefile_location_name }

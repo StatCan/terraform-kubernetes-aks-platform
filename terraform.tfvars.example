@@ -32,3 +32,22 @@ velero_azure_client_secret = ""
 velero_azure_resource_group = ""
 velero_azure_subscription_id = ""
 velero_azure_tenant_id = ""
+
+# Vault
+vault_azure_sa_name = ""
+vault_azure_sa_key  = ""
+vault_azure_sa_container = ""
+vault_azure_kv_tenant_id = ""
+vault_azure_kv_client_id = ""
+vault_azure_kv_client_secret = ""
+vault_azure_kv_vault_name = ""
+vault_azure_kv_key_name = ""
+
+# Azure Active Directory
+vault_aad_resource_id = "/subscriptions/<subscription>/resourceGroups/<resourcegroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<msi>"
+vault_aad_client_id = ""
+
+# Drupal WxT
+enable_azurefile = ""
+azurefile_location_name = ""
+azurefile_storage_account_name = ""

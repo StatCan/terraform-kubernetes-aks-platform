@@ -9,7 +9,7 @@ resource "kubernetes_namespace" "ci" {
 }
 
 module "namespace_ci" {
-  source = "git::https://github.com/statcan/terraform-kubernetes-namespace.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
 
   name = "${kubernetes_namespace.ci.metadata.0.name}"
   namespace_admins = {
