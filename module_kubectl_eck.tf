@@ -6,5 +6,5 @@ module "kubectl_eck" {
   ]
 
   kubectl_service_account = "${module.namespace_elastic_system.helm_service_account}"
-  kubectl_namespace = "${module.namespace_elastic_system.name}"
+  kubectl_namespace       = "${module.namespace_elastic_system.name}"
 }

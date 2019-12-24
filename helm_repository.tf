@@ -1,28 +1,28 @@
 # Operators
 
 data "helm_repository" "istio" {
-    name = "istio"
-    url  = "https://storage.googleapis.com/istio-release/releases/1.3.1/charts"
+  name = "istio"
+  url  = "https://storage.googleapis.com/istio-release/releases/1.3.1/charts"
 }
 
 data "helm_repository" "stable" {
-    name = "stable"
-    url  = "https://kubernetes-charts.storage.googleapis.com"
+  name = "stable"
+  url  = "https://kubernetes-charts.storage.googleapis.com"
 }
 
 data "helm_repository" "drupalwxt" {
-    name = "drupalwxt"
-    url  = "https://drupalwxt.github.io/helm-drupal"
+  name = "drupalwxt"
+  url  = "https://drupalwxt.github.io/helm-drupal"
 }
 
 data "helm_repository" "statcan" {
-    name = "statcan"
-    url  = "https://statcan.github.io/charts"
+  name = "statcan"
+  url  = "https://statcan.github.io/charts"
 }
 
 data "helm_repository" "aad-pod-identity" {
-    name = "aad-pod-identity"
-    url  = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
+  name = "aad-pod-identity"
+  url  = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
 }
 
 resource "null_resource" "helm_repo_add" {

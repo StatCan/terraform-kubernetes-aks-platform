@@ -7,16 +7,16 @@ module "helm_cert_manager" {
   ]
 
   helm_service_account = "tiller"
-  helm_namespace = "${kubernetes_namespace.cert_manager.metadata.0.name}"
-  helm_repository = "jetstack"
+  helm_namespace       = "${kubernetes_namespace.cert_manager.metadata.0.name}"
+  helm_repository      = "jetstack"
 
-  letsencrypt_email = "${var.cert_manager_letsencrypt_email}"
+  letsencrypt_email          = "${var.cert_manager_letsencrypt_email}"
   azure_service_principal_id = "${var.cert_manager_azure_service_principal_id}"
-  azure_client_secret = "${var.cert_manager_azure_client_secret}"
-  azure_subscription_id = "${var.cert_manager_azure_subscription_id}"
-  azure_tenant_id = "${var.cert_manager_azure_tenant_id}"
-  azure_resource_group_name = "${var.cert_manager_azure_resource_group_name}"
-  azure_zone_name = "${var.cert_manager_azure_zone_name}"
+  azure_client_secret        = "${var.cert_manager_azure_client_secret}"
+  azure_subscription_id      = "${var.cert_manager_azure_subscription_id}"
+  azure_tenant_id            = "${var.cert_manager_azure_tenant_id}"
+  azure_resource_group_name  = "${var.cert_manager_azure_resource_group_name}"
+  azure_zone_name            = "${var.cert_manager_azure_zone_name}"
 
   values = <<EOF
 podDnsConfig:

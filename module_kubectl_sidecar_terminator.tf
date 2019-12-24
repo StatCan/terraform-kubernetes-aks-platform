@@ -6,5 +6,5 @@ module "kubectl_sidecar_terminator" {
   ]
 
   kubectl_service_account = "tiller"
-  kubectl_namespace = "kube-system"
+  kubectl_namespace       = "kube-system"
 }

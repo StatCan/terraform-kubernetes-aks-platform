@@ -8,8 +8,8 @@ module "helm_prometheus_operator" {
   ]
 
   helm_service_account = "${module.namespace_monitoring.helm_service_account}"
-  helm_namespace = "${module.namespace_monitoring.name}"
-  helm_repository = "statcan"
+  helm_namespace       = "${module.namespace_monitoring.name}"
+  helm_repository      = "statcan"
 
   values = <<EOF
 prometheus-operator:

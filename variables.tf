@@ -1,56 +1,56 @@
 variable "docker_repo" {
   description = "A repository url used as part of the image pull secret"
-  default = ""
+  default     = ""
 }
 
 variable "docker_username" {
   description = "A username used as part of the image pull secret"
-  default = ""
+  default     = ""
 }
 
 variable "docker_password" {
   description = "A password used as part of the image pull secret"
-  default = ""
+  default     = ""
 }
 
 variable "docker_email" {
   description = "A email used as part of the image pull secret"
-  default = ""
+  default     = ""
 }
 
 variable "docker_auth" {
   description = "A authorization code used as part of the image pull secret"
-  default = ""
+  default     = ""
 }
 
 variable "ingress_domain" {
   description = "The domain used for the majority of the platform services."
-  default = ""
+  default     = ""
 }
 
 variable "kubernetes_client_id" {
   description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
-  default = ""
+  default     = ""
 }
 
 variable "kubernetes_client_secret" {
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
-  default = ""
+  default     = ""
 }
 
 variable "kubernetes_rbac_group" {
   description = "A Kubernetes RBAC Group binding to use for this Managed Kubernetes Cluster"
-  default = ""
+  default     = ""
 }
 
 variable "enable_kubernetes_secret" {
   description = "The Secret to use for the image pull secret for this Managed Kubernetes Cluster"
-  default = ""
+  default     = ""
 }
 
 variable "kubernetes_secret" {
   description = "The Secret to use for the image pull secret for this Managed Kubernetes Cluster"
-  default = ""
+  default     = ""
 }
 
 variable "cert_manager_letsencrypt_email" {
@@ -148,13 +148,14 @@ variable "vault_azure_kv_key_name" {
 variable "vault_aad_resource_id" {
   description = "Vault AAD Resource ID"
 }
+
 variable "vault_aad_client_id" {
   description = "Vault AAD Client ID"
 }
 
 variable "enable_azurefile" {
   description = "Enable adding a storage class that supports Azure File"
-  default = ""
+  default     = ""
 }
 
 variable "azurefile_location_name" {

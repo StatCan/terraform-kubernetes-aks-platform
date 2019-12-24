@@ -7,8 +7,8 @@ module "helm_istio" {
   ]
 
   helm_service_account = "tiller"
-  helm_namespace = "istio-system"
-  helm_repository = "istio"
+  helm_namespace       = "istio-system"
+  helm_repository      = "istio"
 
   kiali_username = "admin"
   kiali_password = "admin"

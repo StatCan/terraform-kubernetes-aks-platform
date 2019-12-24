@@ -4,7 +4,7 @@ resource "kubernetes_namespace" "elastic_system" {
   metadata {
     name = "elastic-system"
 
-    labels = { }
+    labels = {}
   }
 }
 

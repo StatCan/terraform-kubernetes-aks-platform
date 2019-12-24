@@ -7,18 +7,18 @@ module "helm_velero" {
   ]
 
   helm_service_account = "tiller"
-  helm_namespace = "velero"
-  helm_repository = "statcan"
+  helm_namespace       = "velero"
+  helm_repository      = "statcan"
 
   backup_storage_resource_group = "${var.velero_backup_storage_resource_group}"
-  backup_storage_account = "${var.velero_backup_storage_account}"
-  backup_storage_bucket = "${var.velero_backup_storage_bucket}"
+  backup_storage_account        = "${var.velero_backup_storage_account}"
+  backup_storage_bucket         = "${var.velero_backup_storage_bucket}"
 
-  azure_client_id = "${var.velero_azure_client_id}"
-  azure_client_secret = "${var.velero_azure_client_secret}"
-  azure_resource_group = "${var.velero_azure_resource_group}"
+  azure_client_id       = "${var.velero_azure_client_id}"
+  azure_client_secret   = "${var.velero_azure_client_secret}"
+  azure_resource_group  = "${var.velero_azure_resource_group}"
   azure_subscription_id = "${var.velero_azure_subscription_id}"
-  azure_tenant_id = "${var.velero_azure_tenant_id}"
+  azure_tenant_id       = "${var.velero_azure_tenant_id}"
 
   values = <<EOF
 velero:

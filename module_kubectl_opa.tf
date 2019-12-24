@@ -6,5 +6,5 @@ module "kubectl_opa" {
   ]
 
   kubectl_service_account = "${module.namespace_gatekeeper_system.helm_service_account}"
-  kubectl_namespace = "${module.namespace_gatekeeper_system.name}"
+  kubectl_namespace       = "${module.namespace_gatekeeper_system.name}"
 }

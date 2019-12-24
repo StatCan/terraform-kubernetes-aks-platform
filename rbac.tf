@@ -24,7 +24,7 @@ resource "kubernetes_cluster_role" "tiller" {
       "certmanager.k8s.io"
     ]
     resources = ["*"]
-    verbs = ["*"]
+    verbs     = ["*"]
   }
 }
 
@@ -37,14 +37,14 @@ resource "kubernetes_cluster_role_binding" "k8s" {
 
   role_ref {
     api_group = "rbac.authorization.k8s.io"
-    kind = "ClusterRole"
-    name = "cluster-admin"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
   }
 
   subject {
     api_group = "rbac.authorization.k8s.io"
-    kind = "Group"
-    name = "${var.kubernetes_rbac_group}"
+    kind      = "Group"
+    name      = "${var.kubernetes_rbac_group}"
   }
 }
 
@@ -56,23 +56,23 @@ resource "kubernetes_cluster_role" "cluster-user" {
   # Read-only access to namespaces and nodes
   rule {
     api_groups = [""]
-    resources = ["namespaces", "nodes"]
-    verbs = ["list", "get", "watch"]
+    resources  = ["namespaces", "nodes"]
+    verbs      = ["list", "get", "watch"]
   }
 }
 
 # Namespace admin role
 resource "kubernetes_role" "dashboard-user" {
   metadata {
-    name = "dashboard-user"
+    name      = "dashboard-user"
     namespace = "kube-system"
   }
 
   # Read-only access to resource quotas
   rule {
-    api_groups = [""]
-    resources = ["services/proxy"]
+    api_groups     = [""]
+    resources      = ["services/proxy"]
     resource_names = ["https:kubernetes-dashboard:"]
-    verbs = ["get", "create"]
+    verbs          = ["get", "create"]
   }
 }

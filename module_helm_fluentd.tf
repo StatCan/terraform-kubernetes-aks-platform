@@ -7,8 +7,8 @@ module "helm_fluentd" {
   ]
 
   helm_service_account = "tiller"
-  helm_namespace = "monitoring"
-  helm_repository = "statcan"
+  helm_namespace       = "monitoring"
+  helm_repository      = "statcan"
 
   values = <<EOF
 image:

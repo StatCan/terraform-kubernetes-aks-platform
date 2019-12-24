@@ -26,7 +26,7 @@ module "namespace_istio_system" {
 
   # ServiceQuota Overrides
   allowed_loadbalancers = "1"
-  allowed_nodeports = "9"
+  allowed_nodeports     = "9"
 
   # CICD
   ci_name = "argo"
