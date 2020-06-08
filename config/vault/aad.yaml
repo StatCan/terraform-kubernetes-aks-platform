@@ -5,8 +5,8 @@ metadata:
   namespace: vault
 spec:
   type: 0
-  ResourceID: "${vault_aad_resource_id}"
-  ClientID: "${vault_aad_client_id}"
+  resourceID: "${vault_aad_resource_id}"
+  clientID: "${vault_aad_client_id}"
 ---
 apiVersion: aadpodidentity.k8s.io/v1
 kind: AzureIdentityBinding
@@ -14,5 +14,5 @@ metadata:
   name: vault
   namespace: vault
 spec:
-  AzureIdentity: vault
-  Selector: vault
+  azureIdentity: vault
+  selector: vault

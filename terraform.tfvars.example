@@ -1,17 +1,23 @@
 # Secrets
 
 enable_kubernetes_secret = "0"
-# kubernetes_secret = ""
-# docker_repo = ""
-# docker_username = ""
-# docker_password = ""
-# docker_email = ""
-# docker_auth = ""
+kubernetes_secret        = ""
+docker_repo              = ""
+docker_username          = ""
+docker_password          = ""
+docker_email             = ""
+docker_auth              = ""
 
 # Cluster
 
 kubernetes_rbac_group = ""
 ingress_domain = ""
+
+# Groups
+# groups_example = [
+#   # XXXX
+#   "XXXX-XXXX-XXXX-XXXX-XXXX"
+# ]
 
 # Cert Manager
 
@@ -23,31 +29,28 @@ cert_manager_azure_tenant_id = ""
 cert_manager_azure_resource_group_name = ""
 cert_manager_azure_zone_name = ""
 
+# Drupal
+drupal_enable_azurefile = ""
+drupal_azurefile_location_name = ""
+drupal_azurefile_storage_account_name = ""
+
+# Prometheus
+prometheus_grafana_password = ""
+
+# Vault
+vault_aad_client_id = ""
+vault_aad_resource_id = "/subscriptions/<subscription>/resourceGroups/<resourcegroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<msi>"
+vault_azure_storage_key = ""
+vault_azure_storage_name = ""
+vault_keyvault_name = ""
+vault_tenant_id = ""
+
 # Velero
-velero_backup_storage_resource_group = ""
-velero_backup_storage_account = ""
-velero_backup_storage_bucket = ""
 velero_azure_client_id = ""
 velero_azure_client_secret = ""
 velero_azure_resource_group = ""
 velero_azure_subscription_id = ""
 velero_azure_tenant_id = ""
-
-# Vault
-vault_azure_sa_name = ""
-vault_azure_sa_key  = ""
-vault_azure_sa_container = ""
-vault_azure_kv_tenant_id = ""
-vault_azure_kv_client_id = ""
-vault_azure_kv_client_secret = ""
-vault_azure_kv_vault_name = ""
-vault_azure_kv_key_name = ""
-
-# Azure Active Directory
-vault_aad_resource_id = "/subscriptions/<subscription>/resourceGroups/<resourcegroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<msi>"
-vault_aad_client_id = ""
-
-# Drupal WxT
-enable_azurefile = ""
-azurefile_location_name = ""
-azurefile_storage_account_name = ""
+velero_backup_storage_account = ""
+velero_backup_storage_bucket = ""
+velero_backup_storage_resource_group = ""

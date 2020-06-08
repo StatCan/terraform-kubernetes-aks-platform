@@ -1,0 +1,161 @@
+name: 'Terraform GitHub Actions'
+
+# Remove and uncomment below to run GitHub Action
+on:
+  push:
+    branches-ignore:
+      - '**'
+# on:
+#   pull_request:
+#     types: [opened, synchronize, reopened]
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      - name: Write Kubeconfig
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          mkdir -p /home/runner/work/_temp/_github_home/.kube
+          echo "$KUBECONFIG" | base64 --decode > /home/runner/work/_temp/_github_home/.kube/config
+      - name: 'Terraform Format'
+        uses: statcan/terraform-github-actions@master
+        with:
+          tf_actions_version: 0.12.24
+          tf_actions_subcommand: 'fmt'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'Terraform Init'
+        uses: statcan/terraform-github-actions@master
+        with:
+          tf_actions_version: 0.12.24
+          tf_actions_subcommand: 'init'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TF_CLI_ARGS: ${{ secrets.BACKEND_ARGS }}
+          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_cert_manager_azure_client_secret: ${{ secrets.TF_VAR_cert_manager_azure_client_secret }}
+          TF_VAR_cert_manager_azure_resource_group_name: ${{ secrets.TF_VAR_cert_manager_azure_resource_group_name }}
+          TF_VAR_cert_manager_azure_service_principal_id: ${{ secrets.TF_VAR_cert_manager_azure_service_principal_id }}
+          TF_VAR_cert_manager_azure_subscription_id: ${{ secrets.TF_VAR_cert_manager_azure_subscription_id }}
+          TF_VAR_cert_manager_azure_tenant_id: ${{ secrets.TF_VAR_cert_manager_azure_tenant_id }}
+          TF_VAR_cert_manager_azure_zone_name: ${{ secrets.TF_VAR_cert_manager_azure_zone_name }}
+          TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
+          TF_VAR_docker_repo: ${{ secrets.TF_VAR_docker_repo }}
+          TF_VAR_docker_username: ${{ secrets.TF_VAR_docker_username }}
+          TF_VAR_docker_password: ${{ secrets.TF_VAR_docker_password }}
+          TF_VAR_docker_email: ${{ secrets.TF_VAR_docker_email }}
+          TF_VAR_docker_auth: ${{ secrets.TF_VAR_docker_auth }}
+          TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
+          TF_VAR_ingress_domain: ${{ secrets.TF_VAR_ingress_domain }}
+          TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
+          TF_VAR_kubernetes_secret: ${{ secrets.TF_VAR_kubernetes_secret }}
+          TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
+          TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
+          TF_VAR_vault_azure_storage_key: ${{ secrets.TF_VAR_vault_azure_storage_key }}
+          TF_VAR_vault_azure_storage_name: ${{ secrets.TF_VAR_vault_azure_storage_name }}
+          TF_VAR_vault_keyvault_name: ${{ secrets.TF_VAR_vault_keyvault_name }}
+          TF_VAR_vault_tenant_id: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
+          TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
+          TF_VAR_velero_azure_resource_group: ${{ secrets.TF_VAR_velero_azure_resource_group }}
+          TF_VAR_velero_azure_subscription_id: ${{ secrets.TF_VAR_velero_azure_subscription_id }}
+          TF_VAR_velero_azure_tenant_id: ${{ secrets.TF_VAR_velero_azure_tenant_id }}
+          TF_VAR_velero_backup_storage_account: ${{ secrets.TF_VAR_velero_backup_storage_account }}
+          TF_VAR_velero_backup_storage_bucket: ${{ secrets.TF_VAR_velero_backup_storage_bucket }}
+          TF_VAR_velero_backup_storage_resource_group: ${{ secrets.TF_VAR_velero_backup_storage_resource_group }}
+      - name: 'Terraform Validate'
+        uses: statcan/terraform-github-actions@master
+        with:
+          tf_actions_version: 0.12.13
+          tf_actions_subcommand: 'validate'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_cert_manager_azure_client_secret: ${{ secrets.TF_VAR_cert_manager_azure_client_secret }}
+          TF_VAR_cert_manager_azure_resource_group_name: ${{ secrets.TF_VAR_cert_manager_azure_resource_group_name }}
+          TF_VAR_cert_manager_azure_service_principal_id: ${{ secrets.TF_VAR_cert_manager_azure_service_principal_id }}
+          TF_VAR_cert_manager_azure_subscription_id: ${{ secrets.TF_VAR_cert_manager_azure_subscription_id }}
+          TF_VAR_cert_manager_azure_tenant_id: ${{ secrets.TF_VAR_cert_manager_azure_tenant_id }}
+          TF_VAR_cert_manager_azure_zone_name: ${{ secrets.TF_VAR_cert_manager_azure_zone_name }}
+          TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
+          TF_VAR_docker_repo: ${{ secrets.TF_VAR_docker_repo }}
+          TF_VAR_docker_username: ${{ secrets.TF_VAR_docker_username }}
+          TF_VAR_docker_password: ${{ secrets.TF_VAR_docker_password }}
+          TF_VAR_docker_email: ${{ secrets.TF_VAR_docker_email }}
+          TF_VAR_docker_auth: ${{ secrets.TF_VAR_docker_auth }}
+          TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
+          TF_VAR_ingress_domain: ${{ secrets.TF_VAR_ingress_domain }}
+          TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
+          TF_VAR_kubernetes_secret: ${{ secrets.TF_VAR_kubernetes_secret }}
+          TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
+          TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
+          TF_VAR_vault_azure_storage_key: ${{ secrets.TF_VAR_vault_azure_storage_key }}
+          TF_VAR_vault_azure_storage_name: ${{ secrets.TF_VAR_vault_azure_storage_name }}
+          TF_VAR_vault_keyvault_name: ${{ secrets.TF_VAR_vault_keyvault_name }}
+          TF_VAR_vault_tenant_id: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
+          TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
+          TF_VAR_velero_azure_resource_group: ${{ secrets.TF_VAR_velero_azure_resource_group }}
+          TF_VAR_velero_azure_subscription_id: ${{ secrets.TF_VAR_velero_azure_subscription_id }}
+          TF_VAR_velero_azure_tenant_id: ${{ secrets.TF_VAR_velero_azure_tenant_id }}
+          TF_VAR_velero_backup_storage_account: ${{ secrets.TF_VAR_velero_backup_storage_account }}
+          TF_VAR_velero_backup_storage_bucket: ${{ secrets.TF_VAR_velero_backup_storage_bucket }}
+          TF_VAR_velero_backup_storage_resource_group: ${{ secrets.TF_VAR_velero_backup_storage_resource_group }}
+      - name: 'Terraform Plan'
+        uses: statcan/terraform-github-actions@master
+        with:
+          tf_actions_version: 0.12.24
+          tf_actions_subcommand: 'plan'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_cert_manager_azure_client_secret: ${{ secrets.TF_VAR_cert_manager_azure_client_secret }}
+          TF_VAR_cert_manager_azure_resource_group_name: ${{ secrets.TF_VAR_cert_manager_azure_resource_group_name }}
+          TF_VAR_cert_manager_azure_service_principal_id: ${{ secrets.TF_VAR_cert_manager_azure_service_principal_id }}
+          TF_VAR_cert_manager_azure_subscription_id: ${{ secrets.TF_VAR_cert_manager_azure_subscription_id }}
+          TF_VAR_cert_manager_azure_tenant_id: ${{ secrets.TF_VAR_cert_manager_azure_tenant_id }}
+          TF_VAR_cert_manager_azure_zone_name: ${{ secrets.TF_VAR_cert_manager_azure_zone_name }}
+          TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
+          TF_VAR_docker_repo: ${{ secrets.TF_VAR_docker_repo }}
+          TF_VAR_docker_username: ${{ secrets.TF_VAR_docker_username }}
+          TF_VAR_docker_password: ${{ secrets.TF_VAR_docker_password }}
+          TF_VAR_docker_email: ${{ secrets.TF_VAR_docker_email }}
+          TF_VAR_docker_auth: ${{ secrets.TF_VAR_docker_auth }}
+          TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
+          TF_VAR_ingress_domain: ${{ secrets.TF_VAR_ingress_domain }}
+          TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
+          TF_VAR_kubernetes_secret: ${{ secrets.TF_VAR_kubernetes_secret }}
+          TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
+          TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
+          TF_VAR_vault_azure_storage_key: ${{ secrets.TF_VAR_vault_azure_storage_key }}
+          TF_VAR_vault_azure_storage_name: ${{ secrets.TF_VAR_vault_azure_storage_name }}
+          TF_VAR_vault_keyvault_name: ${{ secrets.TF_VAR_vault_keyvault_name }}
+          TF_VAR_vault_tenant_id: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
+          TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
+          TF_VAR_velero_azure_resource_group: ${{ secrets.TF_VAR_velero_azure_resource_group }}
+          TF_VAR_velero_azure_subscription_id: ${{ secrets.TF_VAR_velero_azure_subscription_id }}
+          TF_VAR_velero_azure_tenant_id: ${{ secrets.TF_VAR_velero_azure_tenant_id }}
+          TF_VAR_velero_backup_storage_account: ${{ secrets.TF_VAR_velero_backup_storage_account }}
+          TF_VAR_velero_backup_storage_bucket: ${{ secrets.TF_VAR_velero_backup_storage_bucket }}
+          TF_VAR_velero_backup_storage_resource_group: ${{ secrets.TF_VAR_velero_backup_storage_resource_group }}

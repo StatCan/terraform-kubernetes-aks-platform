@@ -1,7 +1,7 @@
 module "helm_cert_manager" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-cert-manager.git"
 
-  chart_version = "0.8.1"
+  chart_version = "0.15.0"
   dependencies = [
     "${module.namespace_cert_manager.depended_on}",
   ]
@@ -38,6 +38,10 @@ resource "local_file" "cert_wildcard" {
 }
 
 resource "null_resource" "cert_wildcard" {
+  triggers = {
+    hash = sha256(local_file.cert_wildcard.content)
+  }
+
   provisioner "local-exec" {
     command = "kubectl apply -f ${local_file.cert_wildcard.filename}"
   }

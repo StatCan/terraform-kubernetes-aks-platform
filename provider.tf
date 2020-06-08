@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  version = "1.8.0"
+  version = "1.10.0"
 }
 
 provider "null" {
@@ -8,4 +8,8 @@ provider "null" {
 
 provider "local" {
   version = "1.3.0"
+}
+
+provider "azurerm" {
+  version = "1.44.0"
 }

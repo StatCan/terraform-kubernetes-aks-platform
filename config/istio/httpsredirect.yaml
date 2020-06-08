@@ -1,0 +1,5 @@
+---
+- op: replace
+  path: "/spec/servers/0/tls"
+  value:
+    httpsRedirect: true

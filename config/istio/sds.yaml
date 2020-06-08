@@ -1,0 +1,8 @@
+---
+- op: replace
+  path: "/spec/servers/1/tls"
+  value:
+    credentialName: wildcard-tls
+    mode: SIMPLE
+    privateKey: sds
+    serverCertificate: sds

@@ -1,7 +1,7 @@
 # module "helm_drupalwxt" {
 #   source = "git::https://github.com/drupalwxt/terraform-kubernetes-drupalwxt.git"
 
-#   chart_version = "0.1.12"
+#   chart_version = "0.2.2"
 #   dependencies = [
 #     "${module.namespace_drupal.depended_on}",
 #   ]
@@ -10,9 +10,9 @@
 #   helm_namespace = "drupal"
 #   helm_repository = "drupalwxt"
 
-#   enable_azurefile = "${var.enable_azurefile}"
-#   azurefile_location_name = "${var.azurefile_location_name}"
-#   azurefile_storage_account_name = "${var.azurefile_storage_account_name}"
+#   enable_azurefile = "${var.drupal_enable_azurefile}"
+#   azurefile_location_name = "${var.drupal_azurefile_location_name}"
+#   azurefile_storage_account_name = "${var.drupal_azurefile_storage_account_name}"
 
 #   values = <<EOF
 # ingress:
@@ -30,7 +30,7 @@
 #   #      - chart-example.local
 
 # drupal:
-#   tag: 3.0.5
+#   tag: 3.0.11
 
 #   ## User of the application
 #   ##
@@ -52,8 +52,9 @@
 
 #   ## Extra settings.php settings
 #   ##
-#   extraSettings: |-
-#    $settings['trusted_host_patterns'] = ['^example\.ca$'];
+#   extraSettings: ''
+#   #  |-
+#   #  $settings['trusted_host_patterns'] = ['^example\.com$'];
 
 #   # Run the site install
 #   install: true
@@ -85,7 +86,7 @@
 #       mountPath: /var/www/private
 
 # nginx:
-#   tag: 3.0.5-nginx
+#   tag: 3.0.11-nginx
 
 #   # Set your cluster's DNS resolution service here
 #   resolver: 10.0.0.10
@@ -109,7 +110,7 @@
 #   persistence:
 #     enabled: true
 #     storageClass: managed-premium
-#     size: 128Gi
+#     size: 256Gi
 
 #   # Custom mysql configuration files used to override default mysql settings
 #   configurationFiles:
