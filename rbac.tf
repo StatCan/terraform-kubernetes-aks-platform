@@ -46,6 +46,7 @@ resource "kubernetes_cluster_role_binding" "k8s" {
     kind      = "Group"
     name      = "${var.kubernetes_rbac_group}"
   }
+
 }
 
 resource "kubernetes_cluster_role" "cluster-user" {
@@ -74,5 +75,43 @@ resource "kubernetes_role" "dashboard-user" {
     resources      = ["services/proxy"]
     resource_names = ["https:kubernetes-dashboard:"]
     verbs          = ["get", "create"]
+  }
+}
+
+# Allow deploy to deploy to any namespace (ClusterAdmin)
+resource "kubernetes_cluster_role_binding" "ci-deploy-cluster-admin" {
+  metadata {
+    name = "ci-deploy-cluster-admin"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = "deploy"
+    namespace = "${kubernetes_namespace.ci.metadata.0.name}"
+  }
+}
+
+# Allow kubecost to deploy to any namespace (ClusterAdmin)
+resource "kubernetes_cluster_role_binding" "kubecost-cluster-admin" {
+  metadata {
+    name = "kubecost-cluster-admin"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = "tiller"
+    namespace = "${kubernetes_namespace.kubecost.metadata.0.name}"
   }
 }

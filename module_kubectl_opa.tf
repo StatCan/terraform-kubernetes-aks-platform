@@ -7,4 +7,16 @@ module "kubectl_opa" {
 
   kubectl_service_account = "${module.namespace_gatekeeper_system.helm_service_account}"
   kubectl_namespace       = "${module.namespace_gatekeeper_system.name}"
+
+  chart_version = "0.1.0"
+
+  helm_service_account = "${module.namespace_gatekeeper_system.helm_service_account}"
+  helm_namespace       = "${module.namespace_gatekeeper_system.name}"
+  helm_repository      = "azure-policy"
+
+  enable_azure_policy = 0
+  values              = <<EOF
+
+EOF
+
 }

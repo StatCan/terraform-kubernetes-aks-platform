@@ -4,5 +4,5 @@ plan
 .terraform/plugins
 *.tfstate
 *.tfstate.backup
-terraform.tfvars
 generated
+*.tfvars

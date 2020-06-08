@@ -25,7 +25,7 @@ module "namespace_cert_manager" {
   helm_service_account = "tiller"
 
   # CICD
-  ci_name = "octopus"
+  ci_name = "deploy"
 
   # Image Pull Secret
   # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"

@@ -23,7 +23,7 @@ module "namespace_ci" {
   helm_service_account = "tiller"
 
   # CICD
-  ci_name = "argo"
+  ci_name = "deploy"
 
   # Image Pull Secret
   # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"

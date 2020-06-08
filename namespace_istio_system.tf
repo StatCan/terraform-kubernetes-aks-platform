@@ -5,7 +5,8 @@ resource "kubernetes_namespace" "istio_system" {
     name = "istio-system"
 
     labels = {
-      control-plane = "istio-system"
+      control-plane         = "istio-system"
+      "kustomize.component" = "cluster-local-gateway"
     }
   }
 }
@@ -25,20 +26,20 @@ module "namespace_istio_system" {
   helm_service_account = "tiller"
 
   # ServiceQuota Overrides
-  allowed_loadbalancers = "1"
-  allowed_nodeports     = "9"
+  allowed_loadbalancers = "2"
+  allowed_nodeports     = "21"
 
   # CICD
-  ci_name = "argo"
+  ci_name = "deploy"
 
   # Image Pull Secret
-  # enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
-  # kubernetes_secret = "${var.kubernetes_secret}"
-  # docker_repo = "${var.docker_repo}"
-  # docker_username = "${var.docker_username}"
-  # docker_password = "${var.docker_password}"
-  # docker_email = "${var.docker_email}"
-  # docker_auth = "${var.docker_auth}"
+  enable_kubernetes_secret = "${var.enable_kubernetes_secret}"
+  kubernetes_secret        = "${var.kubernetes_secret}"
+  docker_repo              = "${var.docker_repo}"
+  docker_username          = "${var.docker_username}"
+  docker_password          = "${var.docker_password}"
+  docker_email             = "${var.docker_email}"
+  docker_auth              = "${var.docker_auth}"
 
   dependencies = []
 }

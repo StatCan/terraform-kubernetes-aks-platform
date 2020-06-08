@@ -14,7 +14,7 @@ module "helm_prometheus_operator" {
   values = <<EOF
 prometheus-operator:
   grafana:
-    adminPassword: promOperator
+    adminPassword: ${var.prometheus_grafana_password}
 
     ingress:
       enabled: true
@@ -32,7 +32,7 @@ prometheus-operator:
       enabled: true
       storageClassName: default
       accessModes: ["ReadWriteOnce"]
-      size: 10Gi
+      size: 20Gi
 
   prometheus:
     ingress:
@@ -52,7 +52,7 @@ prometheus-operator:
             storageClassName: default
             resources:
               requests:
-                storage: 10Gi
+                storage: 20Gi
 
   alertmanager:
     ingress:
@@ -72,7 +72,7 @@ prometheus-operator:
             storageClassName: default
             resources:
               requests:
-                storage: 10Gi
+                storage: 20Gi
 
 destinationRule:
   enabled: true
