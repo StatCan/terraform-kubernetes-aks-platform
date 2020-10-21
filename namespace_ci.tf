@@ -28,10 +28,6 @@ module "namespace_ci" {
     ]
   }
 
-  # ServiceQuota Overrides
-  allowed_loadbalancers = "1"
-  allowed_nodeports     = "1"
-
   # ServiceAccount
   helm_service_account = "tiller"
 
