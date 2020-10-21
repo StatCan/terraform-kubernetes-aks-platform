@@ -55,8 +55,6 @@ prometheus-operator:
             resources:
               requests:
                 storage: 20Gi
-      externalLabels:
-        cluster: development
 
   alertmanager:
     ingress:
