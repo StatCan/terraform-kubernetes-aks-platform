@@ -4,15 +4,24 @@ resource "kubernetes_namespace" "istio_system" {
   metadata {
     name = "istio-system"
 
-    labels = {
-      control-plane         = "istio-system"
-      "kustomize.component" = "cluster-local-gateway"
+    annotations = {
+      "logging.csp.vmware.com/fluentd-status" = ""
     }
+
+    labels = {
+      control-plane = "istio-system"
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["logging.csp.vmware.com/fluentd-status"]
+    ]
   }
 }
 
 module "namespace_istio_system" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
 
   name = "${kubernetes_namespace.istio_system.metadata.0.name}"
   namespace_admins = {
@@ -26,8 +35,8 @@ module "namespace_istio_system" {
   helm_service_account = "tiller"
 
   # ServiceQuota Overrides
-  allowed_loadbalancers = "2"
-  allowed_nodeports     = "21"
+  allowed_loadbalancers = "1"
+  allowed_nodeports     = "9"
 
   # CICD
   ci_name = "deploy"

@@ -1,16 +1,14 @@
 module "helm_vault_agent" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-vault.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-vault.git?ref=v2.0.0"
 
   chart_version = "0.0.7"
   dependencies = [
     "${module.namespace_vault.depended_on}",
-    "${null_resource.helm_repo_add.id}",
   ]
 
-  helm_release_name    = "vault-agent"
-  helm_service_account = "tiller"
-  helm_namespace       = "vault"
-  helm_repository      = "statcan"
+  helm_release_name = "vault-agent"
+  helm_namespace    = "vault"
+  helm_repository   = "statcan"
 
   values = <<EOF
 vault:
@@ -38,15 +36,19 @@ EOF
 #     revision = "${module.helm_vault_agent.release_revision}"
 #   }
 #   provisioner "local-exec" {
-#     command = "kubectl -n cloudops patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/metadata/annotations\", \"value\": { \"sidecar.istio.io/inject\": \"false\" }}]'"
+#     command = "kubectl -n vault patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/metadata/annotations\", \"value\": { \"sidecar.istio.io/inject\": \"false\" }}]'"
 #   }
 
 #   provisioner "local-exec" {
-#     command = "kubectl -n cloudops patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/env/2/value\", \"value\": \"https://vault.example.ca\"}]'"
+#     command = "kubectl -n vault patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/env/2/value\", \"value\": \"https://vault.example.ca\"}]'"
 #   }
 
 #   provisioner "local-exec" {
-#     command = "kubectl -n cloudops patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/template/spec/containers/0/env/6\", \"value\": { \"name\": \"AGENT_INJECT_VAULT_AUTH_PATH\", \"value\": \"auth/k8s-cancentral-01-tc-aks\"}}]'"
+#     command = "kubectl -n vault patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/env/6\", \"value\": { \"name\": \"AGENT_INJECT_VAULT_AUTH_PATH\", \"value\": \"auth/k8s-XXXXX\"}}]'"
+#   }
+
+#   provisioner "local-exec" {
+#     command = "kubectl -n vault patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/imagePullSecrets\", \"value\": [{ \"name\": \"registry\" }]}]'"
 #   }
 
 #   depends_on = [

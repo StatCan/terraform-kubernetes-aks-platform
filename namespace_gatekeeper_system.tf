@@ -1,8 +1,11 @@
 # GateKeeper System
-
 resource "kubernetes_namespace" "gatekeeper_system" {
   metadata {
     name = "gatekeeper-system"
+
+    annotations = {
+      "logging.csp.vmware.com/fluentd-status" = ""
+    }
 
     labels = {
       "admission.gatekeeper.sh/ignore" = "no-self-managing"
@@ -10,10 +13,16 @@ resource "kubernetes_namespace" "gatekeeper_system" {
       "gatekeeper.sh/system"           = "yes"
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["logging.csp.vmware.com/fluentd-status"]
+    ]
+  }
 }
 
 module "namespace_gatekeeper_system" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
 
   name = "${kubernetes_namespace.gatekeeper_system.metadata.0.name}"
   namespace_admins = {

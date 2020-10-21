@@ -4,14 +4,24 @@ resource "kubernetes_namespace" "cert_manager" {
   metadata {
     name = "cert-manager"
 
+    annotations = {
+      "logging.csp.vmware.com/fluentd-status" = ""
+    }
+
     labels = {
       "certmanager.k8s.io/disable-validation" = "true"
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["logging.csp.vmware.com/fluentd-status"]
+    ]
+  }
 }
 
 module "namespace_cert_manager" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
 
   name = "${kubernetes_namespace.cert_manager.metadata.0.name}"
   namespace_admins = {

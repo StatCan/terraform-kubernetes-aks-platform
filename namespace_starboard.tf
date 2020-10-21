@@ -1,22 +1,29 @@
-# Vault
-
-resource "kubernetes_namespace" "vault" {
+# StarBoard
+resource "kubernetes_namespace" "starboard" {
   metadata {
-    name = "vault"
+    name = "starboard"
 
-    labels = {
-      istio-injection = "enabled"
+    annotations = {
+      "logging.csp.vmware.com/fluentd-status" = ""
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["logging.csp.vmware.com/fluentd-status"]
+    ]
   }
 }
 
-module "namespace_vault" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
+module "namespace_starboard" {
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
 
-  name = "${kubernetes_namespace.vault.metadata.0.name}"
+  name = "${kubernetes_namespace.starboard.metadata.0.name}"
   namespace_admins = {
-    users  = []
-    groups = [var.kubernetes_rbac_group]
+    users = []
+    groups = [
+      "${var.kubernetes_rbac_group}"
+    ]
   }
 
   # ServiceAccount

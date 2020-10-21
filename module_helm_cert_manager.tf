@@ -1,14 +1,13 @@
 module "helm_cert_manager" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-cert-manager.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-cert-manager.git?ref=v2.0.1"
 
   chart_version = "0.15.0"
   dependencies = [
     "${module.namespace_cert_manager.depended_on}",
   ]
 
-  helm_service_account = "tiller"
-  helm_namespace       = "${kubernetes_namespace.cert_manager.metadata.0.name}"
-  helm_repository      = "jetstack"
+  helm_namespace  = "${kubernetes_namespace.cert_manager.metadata.0.name}"
+  helm_repository = "https://charts.jetstack.io"
 
   letsencrypt_email          = "${var.cert_manager_letsencrypt_email}"
   azure_service_principal_id = "${var.cert_manager_azure_service_principal_id}"

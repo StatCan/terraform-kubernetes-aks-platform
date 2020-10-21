@@ -1,13 +1,13 @@
 resource "kubernetes_service_account" "vault_auth" {
   metadata {
     name      = "vault-auth"
-    namespace = "${kubernetes_namespace.vault.metadata.0.name}"
+    namespace = "default"
   }
 }
 
 resource "kubernetes_cluster_role_binding" "vault_auth_token_review" {
   metadata {
-    name = "role-tokenreview-binding"
+    name = "vault-auth"
   }
 
   role_ref {
