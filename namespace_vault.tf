@@ -4,6 +4,11 @@ resource "kubernetes_namespace" "vault" {
   metadata {
     name = "vault"
 
+
+    labels = {
+      istio-injection = "enabled"
+    }
+
     annotations = {
       "logging.csp.vmware.com/fluentd-status" = ""
     }
@@ -18,7 +23,7 @@ resource "kubernetes_namespace" "vault" {
 
 module "namespace_vault" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
-  name = "${kubernetes_namespace.vault.metadata.0.name}"
+  name   = "${kubernetes_namespace.vault.metadata.0.name}"
   namespace_admins = {
     users = []
     groups = [

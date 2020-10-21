@@ -9,7 +9,7 @@ resource "kubernetes_cluster_role" "tiller" {
     api_groups = [
       "",
       "extensions",
-      "apps", 
+      "apps",
       "batch",
       "policy",
       "admissionregistration.k8s.io",
