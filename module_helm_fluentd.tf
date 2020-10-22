@@ -1,14 +1,13 @@
 module "helm_fluentd" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-fluentd.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-fluentd.git?ref=v2.0.0"
 
-  chart_version = "0.0.2"
+  chart_version = "0.3.3"
   dependencies = [
     "${module.namespace_monitoring.depended_on}",
   ]
 
-  helm_service_account = "tiller"
-  helm_namespace       = "monitoring"
-  helm_repository      = "statcan"
+  helm_namespace  = "monitoring"
+  helm_repository = "statcan"
 
   values = <<EOF
 image:

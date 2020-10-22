@@ -3,6 +3,6 @@
 resource "null_resource" "kube_system" {
 
   provisioner "local-exec" {
-    command = "kubectl label ns kube-system control-plane=kube-system --overwrite"
+    command = "kubectl label ns kube-system control-plane=controller-manager --overwrite"
   }
 }

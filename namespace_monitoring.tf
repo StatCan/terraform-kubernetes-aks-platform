@@ -4,14 +4,24 @@ resource "kubernetes_namespace" "monitoring" {
   metadata {
     name = "monitoring"
 
+    annotations = {
+      "logging.csp.vmware.com/fluentd-status" = ""
+    }
+
     labels = {
       control-plane = "monitoring"
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["logging.csp.vmware.com/fluentd-status"]
+    ]
+  }
 }
 
 module "namespace_monitoring" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
 
   name = "${kubernetes_namespace.monitoring.metadata.0.name}"
   namespace_admins = {

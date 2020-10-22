@@ -1,8 +1,7 @@
-# Velero
-
-resource "kubernetes_namespace" "velero" {
+# StarBoard
+resource "kubernetes_namespace" "starboard" {
   metadata {
-    name = "velero"
+    name = "starboard"
 
     annotations = {
       "logging.csp.vmware.com/fluentd-status" = ""
@@ -16,9 +15,10 @@ resource "kubernetes_namespace" "velero" {
   }
 }
 
-module "namespace_velero" {
+module "namespace_starboard" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
-  name   = "${kubernetes_namespace.velero.metadata.0.name}"
+
+  name = "${kubernetes_namespace.starboard.metadata.0.name}"
   namespace_admins = {
     users = []
     groups = [

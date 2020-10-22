@@ -1,5 +1,5 @@
 module "namespace_default" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
 
   name = "default"
   namespace_admins = {

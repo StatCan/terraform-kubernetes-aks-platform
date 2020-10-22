@@ -1,17 +1,20 @@
 module "helm_prometheus_operator" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-prometheus.git"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-prometheus.git?ref=v2.0.0"
 
   chart_version = "0.0.2"
   dependencies = [
     "${module.namespace_monitoring.depended_on}",
-    "${module.helm_istio.depended_on}",
+    "${module.istio_operator.depended_on}",
   ]
 
-  helm_service_account = "${module.namespace_monitoring.helm_service_account}"
-  helm_namespace       = "${module.namespace_monitoring.name}"
-  helm_repository      = "statcan"
+  helm_namespace  = "${module.namespace_monitoring.name}"
+  helm_repository = "statcan"
 
   values = <<EOF
+# Default values for prometheus-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 prometheus-operator:
   grafana:
     adminPassword: ${var.prometheus_grafana_password}
@@ -39,8 +42,7 @@ prometheus-operator:
       enabled: true
       hosts:
         - prometheus.${var.ingress_domain}
-      paths:
-        - /.*
+      path: /.*
       annotations:
         kubernetes.io/ingress.class: istio
 
@@ -59,8 +61,7 @@ prometheus-operator:
       enabled: true
       hosts:
         - alertmanager.${var.ingress_domain}
-      paths:
-        - /.*
+      path: /.*
       annotations:
         kubernetes.io/ingress.class: istio
 

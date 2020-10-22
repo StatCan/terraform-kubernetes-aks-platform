@@ -1,18 +1,8 @@
 # Operators
 
-data "helm_repository" "istio" {
-  name = "istio"
-  url  = "https://storage.googleapis.com/istio-release/releases/1.4.7/charts"
-}
-
 data "helm_repository" "stable" {
   name = "stable"
   url  = "https://kubernetes-charts.storage.googleapis.com"
-}
-
-data "helm_repository" "drupalwxt" {
-  name = "drupalwxt"
-  url  = "https://drupalwxt.github.io/helm-drupal"
 }
 
 data "helm_repository" "statcan" {
@@ -31,7 +21,7 @@ resource "null_resource" "helm_repo_add" {
   }
 
   provisioner "local-exec" {
-    command = "helm repo add istio https://storage.googleapis.com/istio-release/releases/1.4.7/charts"
+    command = "helm repo add stable https://kubernetes-charts.storage.googleapis.com"
   }
 
   provisioner "local-exec" {
@@ -39,11 +29,7 @@ resource "null_resource" "helm_repo_add" {
   }
 
   provisioner "local-exec" {
-    command = "helm repo add stable https://kubernetes-charts.storage.googleapis.com"
-  }
-
-  provisioner "local-exec" {
-    command = "helm repo add drupalwxt https://drupalwxt.github.io/helm-drupal"
+    command = "helm repo add istio https://storage.googleapis.com/istio-release/releases/1.4.9/charts"
   }
 
   provisioner "local-exec" {

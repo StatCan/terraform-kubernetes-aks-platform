@@ -1,13 +1,3 @@
-variable "enable_kubernetes_secret" {
-  description = "The Secret to use for the image pull secret for this Managed Kubernetes Cluster"
-  default     = ""
-}
-
-variable "kubernetes_secret" {
-  description = "The Secret to use for the image pull secret for this Managed Kubernetes Cluster"
-  default     = ""
-}
-
 variable "docker_repo" {
   description = "A repository url used as part of the image pull secret"
   default     = ""
@@ -33,20 +23,35 @@ variable "docker_auth" {
   default     = ""
 }
 
-variable "kubernetes_rbac_group" {
-  description = "A Kubernetes RBAC Group binding to use for this Managed Kubernetes Cluster"
-  default     = ""
-}
-
 variable "ingress_domain" {
   description = "The domain used for the majority of the platform services."
   default     = ""
 }
 
-# variable "groups_example" {
-#   type        = list(string)
-#   description = "List of groups with access to Example namespaces"
-# }
+variable "kubernetes_client_id" {
+  description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
+  default     = ""
+}
+
+variable "kubernetes_client_secret" {
+  description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
+  default     = ""
+}
+
+variable "kubernetes_rbac_group" {
+  description = "A Kubernetes RBAC Group binding to use for this Managed Kubernetes Cluster"
+  default     = ""
+}
+
+variable "enable_kubernetes_secret" {
+  description = "The Secret to use for the image pull secret for this Managed Kubernetes Cluster"
+  default     = ""
+}
+
+variable "kubernetes_secret" {
+  description = "The Secret to use for the image pull secret for this Managed Kubernetes Cluster"
+  default     = ""
+}
 
 variable "cert_manager_letsencrypt_email" {
   description = "The lets encrypt email to use for Cert Manager"
@@ -74,19 +79,6 @@ variable "cert_manager_azure_resource_group_name" {
 
 variable "cert_manager_azure_zone_name" {
   description = "The lets encrypt email to use for Cert Manager"
-}
-
-variable "drupal_enable_azurefile" {
-  description = "Enable adding a storage class that supports Azure File"
-  default     = ""
-}
-
-variable "drupal_azurefile_location_name" {
-  description = "The location (region) of the storage account to be used for the Storage Class"
-}
-
-variable "drupal_azurefile_storage_account_name" {
-  description = "The storage account named to be used for the Storage Class"
 }
 
 variable "prometheus_grafana_password" {
