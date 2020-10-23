@@ -21,7 +21,7 @@ resource "kubernetes_namespace" "istio_system" {
 }
 
 module "namespace_istio_system" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v2.1.0"
 
   name = "${kubernetes_namespace.istio_system.metadata.0.name}"
   namespace_admins = {
@@ -30,9 +30,6 @@ module "namespace_istio_system" {
       "${var.kubernetes_rbac_group}"
     ]
   }
-
-  # ServiceAccount
-  helm_service_account = "tiller"
 
   # ServiceQuota Overrides
   allowed_loadbalancers = "1"

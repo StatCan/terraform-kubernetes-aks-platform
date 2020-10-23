@@ -1,5 +1,5 @@
 module "namespace_default" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v2.1.0"
 
   name = "default"
   namespace_admins = {
@@ -8,9 +8,6 @@ module "namespace_default" {
       "${var.kubernetes_rbac_group}"
     ]
   }
-
-  # ServiceAccount
-  helm_service_account = "tiller"
 
   # CICD
   ci_name = "deploy"

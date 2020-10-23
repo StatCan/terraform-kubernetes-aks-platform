@@ -1,14 +1,16 @@
 module "helm_prometheus_operator" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-prometheus.git?ref=v2.0.0"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-prometheus.git?ref=v2.0.1"
 
-  chart_version = "0.0.2"
+  chart_version = "0.1.2"
   dependencies = [
-    "${module.namespace_monitoring.depended_on}",
-    "${module.istio_operator.depended_on}",
+    module.namespace_monitoring.depended_on,
+    module.istio_operator.depended_on,
   ]
 
-  helm_namespace  = "${module.namespace_monitoring.name}"
-  helm_repository = "statcan"
+  helm_namespace  = module.namespace_monitoring.name
+  helm_repository = "https://statcan.github.io/charts"
+  # helm_repository_password = var.docker_password
+  # helm_repository_username = var.docker_username
 
   values = <<EOF
 # Default values for prometheus-operator.

@@ -12,7 +12,7 @@ resource "kubernetes_namespace" "istio_operator" {
 }
 
 module "namespace_istio_operator" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v2.1.0"
 
   name = kubernetes_namespace.istio_operator.metadata.0.name
   namespace_admins = {
@@ -25,9 +25,6 @@ module "namespace_istio_operator" {
   # ServiceQuota Overrides
   allowed_loadbalancers = "1"
   allowed_nodeports     = "1"
-
-  # ServiceAccount
-  helm_service_account = "tiller"
 
   # CICD
   ci_name = "deploy"

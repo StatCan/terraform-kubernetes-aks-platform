@@ -27,9 +27,8 @@ module "helm_vault" {
     "${null_resource.helm_repo_add.id}",
   ]
 
-  helm_service_account = "tiller"
-  helm_namespace       = "vault"
-  helm_repository      = "statcan"
+  helm_namespace  = "vault"
+  helm_repository = "https://statcan.github.io/charts"
 
   values = <<EOF
 vault:

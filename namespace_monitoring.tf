@@ -21,7 +21,7 @@ resource "kubernetes_namespace" "monitoring" {
 }
 
 module "namespace_monitoring" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v1.0.1"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-namespace.git?ref=v2.1.0"
 
   name = "${kubernetes_namespace.monitoring.metadata.0.name}"
   namespace_admins = {
@@ -30,9 +30,6 @@ module "namespace_monitoring" {
       "${var.kubernetes_rbac_group}"
     ]
   }
-
-  # ServiceAccount
-  helm_service_account = "tiller"
 
   # CICD
   ci_name = "deploy"

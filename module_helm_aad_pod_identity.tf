@@ -6,7 +6,7 @@ module "helm_aad_pod_identity" {
   ]
   helm_service_account = "tiller"
   helm_namespace       = "default"
-  helm_repository      = "aad-pod-identity"
+  helm_repository      = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
   resource_id          = ""
   client_id            = ""
   values               = <<EOF

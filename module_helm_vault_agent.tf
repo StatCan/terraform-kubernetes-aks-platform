@@ -1,14 +1,16 @@
 module "helm_vault_agent" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-vault.git?ref=v2.0.0"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-vault.git?ref=v2.0.2"
 
   chart_version = "0.0.7"
   dependencies = [
-    "${module.namespace_vault.depended_on}",
+    module.namespace_vault.depended_on
   ]
 
   helm_release_name = "vault-agent"
   helm_namespace    = "vault"
-  helm_repository   = "statcan"
+  helm_repository   = "https://statcan.github.io/charts"
+  # helm_repository_password = var.docker_password
+  # helm_repository_username = var.docker_username
 
   values = <<EOF
 vault:

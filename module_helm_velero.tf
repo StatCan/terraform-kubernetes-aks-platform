@@ -1,23 +1,25 @@
 module "helm_velero" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-velero.git?ref=v2.0.0"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-velero.git?ref=v2.0.1"
 
   chart_version = "0.1.0"
   dependencies = [
-    "${module.namespace_velero.depended_on}",
+    module.namespace_velero.depended_on,
   ]
 
   helm_namespace  = "velero"
-  helm_repository = "statcan"
+  helm_repository = "https://statcan.github.io/charts"
+  # helm_repository_password = var.docker_password
+  # helm_repository_username = var.docker_username
 
-  backup_storage_resource_group = "${var.velero_backup_storage_resource_group}"
-  backup_storage_account        = "${var.velero_backup_storage_account}"
-  backup_storage_bucket         = "${var.velero_backup_storage_bucket}"
+  backup_storage_resource_group = var.velero_backup_storage_resource_group
+  backup_storage_account        = var.velero_backup_storage_account
+  backup_storage_bucket         = var.velero_backup_storage_bucket
 
-  azure_client_id       = "${var.velero_azure_client_id}"
-  azure_client_secret   = "${var.velero_azure_client_secret}"
-  azure_resource_group  = "${var.velero_azure_resource_group}"
-  azure_subscription_id = "${var.velero_azure_subscription_id}"
-  azure_tenant_id       = "${var.velero_azure_tenant_id}"
+  azure_client_id       = var.velero_azure_client_id
+  azure_client_secret   = var.velero_azure_client_secret
+  azure_resource_group  = var.velero_azure_resource_group
+  azure_subscription_id = var.velero_azure_subscription_id
+  azure_tenant_id       = var.velero_azure_tenant_id
 
   values = <<EOF
 velero:
@@ -57,6 +59,14 @@ velero:
   #       ttl: "240h"
   #       includedNamespaces:
   #        - foo
-  schedules: {}
+  schedules:
+    hourly-resources:
+      schedule: "0 * * * *"
+      template:
+        includeClusterResources: true
+        includedNamespaces:
+        - '*'
+        snapshotVolumes: false
+        ttl: 720h0m0s
 EOF
 }

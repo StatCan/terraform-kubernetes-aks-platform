@@ -1,33 +1,3 @@
-# Tiller role
-
-resource "kubernetes_cluster_role" "tiller" {
-  metadata {
-    name = "tiller"
-  }
-
-  rule {
-    api_groups = [
-      "",
-      "extensions",
-      "apps",
-      "batch",
-      "policy",
-      "admissionregistration.k8s.io",
-      "rbac.authorization.k8s.io",
-      "apiregistration.k8s.io",
-      "apiextensions.k8s.io",
-      "networking.k8s.io",
-      "networking.istio.io",
-      "authentication.istio.io",
-      "config.istio.io",
-      "monitoring.coreos.com",
-      "certmanager.k8s.io"
-    ]
-    resources = ["*"]
-    verbs     = ["*"]
-  }
-}
-
 # Permissions
 
 resource "kubernetes_cluster_role_binding" "k8s" {
