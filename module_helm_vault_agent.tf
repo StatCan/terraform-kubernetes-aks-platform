@@ -35,7 +35,7 @@ EOF
 
 # resource "null_resource" "vault_agent_patches" {
 #   triggers = {
-#     revision = "${module.helm_vault_agent.release_revision}"
+#     revision = module.helm_vault_agent.release_revision
 #   }
 #   provisioner "local-exec" {
 #     command = "kubectl -n vault patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/metadata/annotations\", \"value\": { \"sidecar.istio.io/inject\": \"false\" }}]'"

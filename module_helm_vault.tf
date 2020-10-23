@@ -1,9 +1,9 @@
 # AAD Pod Identity Configuration for Vault
 resource "local_file" "vault_aad" {
-  content = "${templatefile("${path.module}/config/vault/aad.yaml", {
-    vault_aad_resource_id = "${var.vault_aad_resource_id}"
-    vault_aad_client_id   = "${var.vault_aad_client_id}"
-  })}"
+  content = templatefile("${path.module}/config/vault/aad.yaml", {
+    vault_aad_resource_id = var.vault_aad_resource_id
+    vault_aad_client_id   = var.vault_aad_client_id
+  })
 
   filename = "${path.module}/generated/vault/aad.yaml"
 }
@@ -23,8 +23,8 @@ module "helm_vault" {
 
   chart_version = "0.0.7"
   dependencies = [
-    "${module.namespace_vault.depended_on}",
-    "${null_resource.helm_repo_add.id}",
+    module.namespace_vault.depended_on,
+    null_resource.helm_repo_add.id,
   ]
 
   helm_namespace  = "vault"
@@ -93,7 +93,7 @@ EOF
 
 # resource "null_resource" "vault_patches" {
 #   triggers = {
-#     revision = "${module.helm_vault.release_revision}"
+#     revision = module.helm_vault.release_revision
 #   }
 #   provisioner "local-exec" {
 #     command = "kubectl -n vault patch statefulset vault --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/env/3/value\", \"value\": \"http://vault.vault.svc.cluster.local:8200\"}]'"

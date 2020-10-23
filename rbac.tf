@@ -14,7 +14,7 @@ resource "kubernetes_cluster_role_binding" "k8s" {
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Group"
-    name      = "${var.kubernetes_rbac_group}"
+    name      = var.kubernetes_rbac_group
   }
 
 }
@@ -47,6 +47,6 @@ resource "kubernetes_cluster_role_binding" "ci-deploy-cluster-admin" {
   subject {
     kind      = "ServiceAccount"
     name      = "deploy"
-    namespace = "${kubernetes_namespace.ci.metadata.0.name}"
+    namespace = kubernetes_namespace.ci.metadata.0.name
   }
 }

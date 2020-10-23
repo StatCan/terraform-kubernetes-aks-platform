@@ -18,7 +18,7 @@ resource "kubernetes_cluster_role_binding" "vault_auth_token_review" {
 
   subject {
     kind      = "ServiceAccount"
-    name      = "${kubernetes_service_account.vault_auth.metadata.0.name}"
-    namespace = "${kubernetes_service_account.vault_auth.metadata.0.namespace}"
+    name      = kubernetes_service_account.vault_auth.metadata.0.name
+    namespace = kubernetes_service_account.vault_auth.metadata.0.namespace
   }
 }

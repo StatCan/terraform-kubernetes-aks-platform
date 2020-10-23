@@ -18,7 +18,7 @@ module "namespace_istio_operator" {
   namespace_admins = {
     users = []
     groups = [
-      "${var.kubernetes_rbac_group}"
+      var.kubernetes_rbac_group
     ]
   }
 

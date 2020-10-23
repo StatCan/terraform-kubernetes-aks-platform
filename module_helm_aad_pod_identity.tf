@@ -2,7 +2,7 @@ module "helm_aad_pod_identity" {
   source        = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-aad-pod-identity.git"
   chart_version = "1.6.0"
   dependencies = [
-    "${module.namespace_default.depended_on}",
+    module.namespace_default.depended_on,
   ]
   helm_service_account = "tiller"
   helm_namespace       = "default"
