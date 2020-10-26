@@ -1,7 +1,7 @@
 module "helm_velero" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-velero.git?ref=v2.0.1"
 
-  chart_version = "0.1.0"
+  chart_version = "0.2.0"
   dependencies = [
     module.namespace_velero.depended_on,
   ]

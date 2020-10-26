@@ -1,7 +1,7 @@
 module "helm_prometheus_operator" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-prometheus.git?ref=v2.0.1"
 
-  chart_version = "0.1.2"
+  chart_version = "0.2.2"
   dependencies = [
     module.namespace_monitoring.depended_on,
     module.istio_operator.depended_on,
@@ -44,7 +44,8 @@ prometheus-operator:
       enabled: true
       hosts:
         - prometheus.${var.ingress_domain}
-      path: /.*
+      paths:
+        - '/.*'
       annotations:
         kubernetes.io/ingress.class: istio
 
@@ -63,7 +64,8 @@ prometheus-operator:
       enabled: true
       hosts:
         - alertmanager.${var.ingress_domain}
-      path: /.*
+      paths:
+       - '/.*'
       annotations:
         kubernetes.io/ingress.class: istio
 

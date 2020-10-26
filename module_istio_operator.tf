@@ -52,7 +52,7 @@ components:
                     privateKey: sds
                     serverCertificate: sds
         serviceAnnotations:
-          service.beta.kubernetes.io/azure-load-balancer-internal: 'true'
+          service.beta.kubernetes.io/azure-load-balancer-internal: 'false'
   policy:
     enabled: true
   telemetry:

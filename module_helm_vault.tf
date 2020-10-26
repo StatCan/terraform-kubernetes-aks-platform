@@ -21,7 +21,7 @@ resource "null_resource" "vault_aad" {
 module "helm_vault" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-vault.git"
 
-  chart_version = "0.0.7"
+  chart_version = "0.1.8"
   dependencies = [
     module.namespace_vault.depended_on,
   ]
@@ -40,8 +40,8 @@ vault:
 
   server:
     image:
-      repository: hashicorp/vault
-      tag: 1.4.0
+      repository: vault
+      tag: 1.5.4
 
     authDelegator:
       enabled: false
@@ -65,7 +65,7 @@ vault:
       config: |
         ui = true
 
-        plugin_directory = "/plugins"
+        # plugin_directory = "/plugins"
 
         listener "tcp" {
           tls_disable = 1
