@@ -1,5 +1,5 @@
 module "helm_fluentd" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-cert-manager.git?ref=v2.0.1"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-fluentd.git?ref=v2.0.1"
 
   chart_version = "0.3.3"
   dependencies = [

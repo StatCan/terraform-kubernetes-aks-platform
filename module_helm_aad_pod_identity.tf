@@ -4,7 +4,6 @@ module "helm_aad_pod_identity" {
   dependencies = [
     module.namespace_default.depended_on,
   ]
-  helm_service_account = "tiller"
   helm_namespace       = "default"
   helm_repository      = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
   resource_id          = ""
