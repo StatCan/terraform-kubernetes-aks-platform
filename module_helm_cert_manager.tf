@@ -1,5 +1,5 @@
 module "helm_cert_manager" {
-  source = "git::https://gitlab.k8s.cloud.statcan.ca/cloudnative/terraform/modules/terraform-kubernetes-cert-manager.git?ref=v2.0.1"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-kubernetes-cert-manager.git?ref=v2.0.1"
 
   chart_version = "0.15.0"
   dependencies = [
