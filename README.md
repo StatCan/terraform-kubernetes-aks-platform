@@ -12,9 +12,12 @@ If you would like to read more about our platform level components:
 
 ## Security Controls
 
-The following security controls can be met through configuration of this template:
+We have recieved Authority to Operate and are happy to share our supporting documentation:
 
-* TBD
+* Concept of Operations
+* IT Security Controls (100+)
+* CIS Benchmarks
+* IBM Assessment
 
 ## Dependencies
 
