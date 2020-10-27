@@ -4,7 +4,11 @@ The overall flow for this module is pretty simple:
 
 * Create Azure storage account to store Terraform state
 * Create Azure AKS Platform configuration in a modular manner
-* Deploy the infrastructure incrementally
+* Deploy the platform
+
+If you would like to read more about our platform level components:
+
+* [Azure AKS Platform](https://govcloud.blob.core.windows.net/docs/azure-aks-platform.pdf)
 
 ## Security Controls
 
