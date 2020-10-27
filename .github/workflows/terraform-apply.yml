@@ -27,7 +27,7 @@ jobs:
       - name: 'Terraform Init'
         uses: statcan/terraform-github-actions@master
         with:
-          tf_actions_version: 0.12.24
+          tf_actions_version: 0.12.29
           tf_actions_subcommand: 'init'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -71,7 +71,7 @@ jobs:
       - name: 'Terraform Validate'
         uses: statcan/terraform-github-actions@master
         with:
-          tf_actions_version: 0.12.24
+          tf_actions_version: 0.12.29
           tf_actions_subcommand: 'validate'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -115,7 +115,7 @@ jobs:
         uses: statcan/terraform-github-actions@master
         if: github.event.pull_request.merged == true
         with:
-          tf_actions_version: 0.12.24
+          tf_actions_version: 0.12.29
           tf_actions_subcommand: 'apply'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
